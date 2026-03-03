@@ -1,0 +1,471 @@
+[
+  {
+    "text": "View transaction details from last week",
+    "entities": [
+      {
+        "start": 30,
+        "end": 39,
+        "value": "last week",
+        "entity": "date"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "View 10 transaction history",
+    "entities": [],
+    "predicted_entities": [
+      {
+        "entity": "amount",
+        "start": 5,
+        "end": 7,
+        "confidence_entity": 0.8792610168457031,
+        "value": "10",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  },
+  {
+    "text": "Credit card application status",
+    "entities": [],
+    "predicted_entities": [
+      {
+        "entity": "card_type",
+        "start": 0,
+        "end": 6,
+        "confidence_entity": 0.9430603981018066,
+        "value": "credit",
+        "extractor": "DIETClassifier",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "I made a payment on 15th March, did it go through?",
+    "entities": [
+      {
+        "start": 20,
+        "end": 30,
+        "value": "15th March",
+        "entity": "date"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "Did my payment on yesterday get processed?",
+    "entities": [
+      {
+        "start": 18,
+        "end": 27,
+        "value": "yesterday",
+        "entity": "date"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "What happened to my transfer on March 1st?",
+    "entities": [
+      {
+        "start": 32,
+        "end": 41,
+        "value": "March 1st",
+        "entity": "date"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "Get last 10 transactions",
+    "entities": [],
+    "predicted_entities": [
+      {
+        "entity": "amount",
+        "start": 9,
+        "end": 11,
+        "confidence_entity": 0.8532905578613281,
+        "value": "10",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  },
+  {
+    "text": "Show me my current balance",
+    "entities": [],
+    "predicted_entities": [
+      {
+        "entity": "account_type",
+        "start": 11,
+        "end": 18,
+        "confidence_entity": 0.9987360835075378,
+        "value": "current",
+        "extractor": "DIETClassifier",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "I need an ATM near Connaught Place",
+    "entities": [
+      {
+        "start": 19,
+        "end": 34,
+        "value": "Connaught Place",
+        "entity": "location"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "Which branch is closest to Salt Lake, Kolkata?",
+    "entities": [
+      {
+        "start": 27,
+        "end": 45,
+        "value": "Salt Lake, Kolkata",
+        "entity": "location"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "location",
+        "start": 27,
+        "end": 31,
+        "confidence_entity": 0.6494920253753662,
+        "value": "Salt",
+        "extractor": "DIETClassifier"
+      },
+      {
+        "entity": "location",
+        "start": 38,
+        "end": 45,
+        "confidence_entity": 0.9980317950248718,
+        "value": "Kolkata",
+        "extractor": "DIETClassifier",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "Show transactions from January 2024",
+    "entities": [
+      {
+        "start": 23,
+        "end": 35,
+        "value": "January 2024",
+        "entity": "date"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "date",
+        "start": 23,
+        "end": 30,
+        "confidence_entity": 0.994529664516449,
+        "value": "January",
+        "extractor": "DIETClassifier"
+      },
+      {
+        "entity": "amount",
+        "start": 31,
+        "end": 35,
+        "confidence_entity": 0.8745558857917786,
+        "value": "2024",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  },
+  {
+    "text": "Was my transaction on 2024-01-10 successful?",
+    "entities": [
+      {
+        "start": 22,
+        "end": 32,
+        "value": "2024-01-10",
+        "entity": "date"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "amount",
+        "start": 22,
+        "end": 32,
+        "confidence_entity": 0.9460585117340088,
+        "value": "2024-01-10",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  },
+  {
+    "text": "Open a current account for my business",
+    "entities": [
+      {
+        "start": 7,
+        "end": 14,
+        "value": "current",
+        "entity": "account_type"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "account_type",
+        "start": 7,
+        "end": 14,
+        "confidence_entity": 0.9987214207649231,
+        "value": "current",
+        "extractor": "DIETClassifier",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      },
+      {
+        "entity": "loan_type",
+        "start": 30,
+        "end": 38,
+        "confidence_entity": 0.9981837868690491,
+        "value": "business",
+        "extractor": "DIETClassifier",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "How do I apply for a education loan?",
+    "entities": [
+      {
+        "start": 21,
+        "end": 30,
+        "value": "education",
+        "entity": "loan_type"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "Can I get a car loan with bad credit?",
+    "entities": [
+      {
+        "start": 12,
+        "end": 15,
+        "value": "car",
+        "entity": "loan_type"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "loan_type",
+        "start": 12,
+        "end": 15,
+        "confidence_entity": 0.9938216209411621,
+        "value": "car",
+        "extractor": "DIETClassifier",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      },
+      {
+        "entity": "card_type",
+        "start": 30,
+        "end": 36,
+        "confidence_entity": 0.9964050054550171,
+        "value": "credit",
+        "extractor": "DIETClassifier",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "Apply for education loan",
+    "entities": [
+      {
+        "start": 10,
+        "end": 19,
+        "value": "education",
+        "entity": "loan_type"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "Get ATM locations for Madurai",
+    "entities": [
+      {
+        "start": 22,
+        "end": 29,
+        "value": "Madurai",
+        "entity": "location"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "Check if my payment was debited on 10th January",
+    "entities": [
+      {
+        "start": 35,
+        "end": 47,
+        "value": "10th January",
+        "entity": "date"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "card_type",
+        "start": 24,
+        "end": 31,
+        "confidence_entity": 0.9951409101486206,
+        "value": "debited",
+        "extractor": "DIETClassifier"
+      },
+      {
+        "entity": "date",
+        "start": 35,
+        "end": 39,
+        "confidence_entity": 0.6063609719276428,
+        "value": "10th",
+        "extractor": "DIETClassifier"
+      },
+      {
+        "entity": "date",
+        "start": 40,
+        "end": 47,
+        "confidence_entity": 0.9833584427833557,
+        "value": "January",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  },
+  {
+    "text": "What credit cards do you offer?",
+    "entities": [],
+    "predicted_entities": [
+      {
+        "entity": "card_type",
+        "start": 5,
+        "end": 11,
+        "confidence_entity": 0.9857990741729736,
+        "value": "credit",
+        "extractor": "DIETClassifier",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "Show me ATMs in Bangalore",
+    "entities": [
+      {
+        "start": 16,
+        "end": 25,
+        "value": "Bangalore",
+        "entity": "location"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "Show me branches in Bangalore",
+    "entities": [
+      {
+        "start": 20,
+        "end": 29,
+        "value": "Bangalore",
+        "entity": "location"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "Show last 5 transactions",
+    "entities": [],
+    "predicted_entities": [
+      {
+        "entity": "amount",
+        "start": 10,
+        "end": 11,
+        "confidence_entity": 0.9030232429504395,
+        "value": "5",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  },
+  {
+    "text": "Transaction history for last month",
+    "entities": [
+      {
+        "start": 24,
+        "end": 34,
+        "value": "last month",
+        "entity": "date"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "date",
+        "start": 24,
+        "end": 28,
+        "confidence_entity": 0.8619673252105713,
+        "value": "last",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  },
+  {
+    "text": "Show recent 5 transactions from savings",
+    "entities": [
+      {
+        "start": 32,
+        "end": 39,
+        "value": "savings",
+        "entity": "account_type"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "amount",
+        "start": 12,
+        "end": 13,
+        "confidence_entity": 0.9248754978179932,
+        "value": "5",
+        "extractor": "DIETClassifier"
+      },
+      {
+        "entity": "account_type",
+        "start": 32,
+        "end": 39,
+        "confidence_entity": 0.9980953335762024,
+        "value": "savings",
+        "extractor": "DIETClassifier",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "Show my last few transactions",
+    "entities": [],
+    "predicted_entities": [
+      {
+        "entity": "date",
+        "start": 8,
+        "end": 12,
+        "confidence_entity": 0.8225901126861572,
+        "value": "last",
+        "extractor": "DIETClassifier"
+      }
+    ]
+  }
+]

@@ -1,0 +1,83 @@
+version: "3.1"
+assistant_id: bank_bot
+
+# ═══════════════════════════════════════════════════════════
+#  BANKING AI CHATBOT — Module 1: Intent & Entity Recognition
+#  config.yml — NLU Pipeline with DIETClassifier
+# ═══════════════════════════════════════════════════════════
+
+recipe: default.v1
+
+language: en
+
+pipeline:
+
+  # ── 1. TOKENIZER ─────────────────────────────────────────
+  # Splits text into tokens. WhitespaceTokenizer is fast and
+  # works well for English banking queries.
+  - name: WhitespaceTokenizer
+
+  # ── 2. FEATURIZERS ───────────────────────────────────────
+  # RegexFeaturizer: detects patterns like amounts, dates, card numbers.
+  - name: RegexFeaturizer
+
+  # LexicalSyntacticFeaturizer: captures word shape, prefix/suffix,
+  # punctuation — useful for recognising entity boundaries.
+  - name: LexicalSyntacticFeaturizer
+
+  # CountVectorsFeaturizer (word-level): bag-of-words for intent classification.
+  - name: CountVectorsFeaturizer
+    analyzer: word
+
+  # CountVectorsFeaturizer (char n-gram): captures sub-word patterns,
+  # helps with typos and out-of-vocabulary words (e.g., "savngs" → savings).
+  - name: CountVectorsFeaturizer
+    analyzer: char_wb
+    min_ngram: 1
+    max_ngram: 4
+
+  # ── 3. DIET CLASSIFIER ───────────────────────────────────
+  # Core component: handles BOTH intent classification AND
+  # entity extraction in a single transformer-based model.
+  - name: DIETClassifier
+    epochs: 100
+    constrain_similarities: true
+    model_confidence: softmax
+    # Transformer architecture settings
+    number_of_transformer_layers: 2
+    transformer_size: 256
+    use_key_relative_attention: true
+    use_value_relative_attention: true
+    max_relative_position: 5
+    # Entity recognition settings
+    entity_recognition: true
+    BILOU_flag: true                   # BILOU tagging for better multi-token entity detection
+    # Training regularization
+    random_seed: 42
+    ranking_length: 10
+
+  # ── 4. ENTITY EXTRACTORS ─────────────────────────────────
+  # EntitySynonymMapper: maps entity synonyms to canonical values
+  # e.g., "saving" → "savings", "CC" → "credit"
+  - name: EntitySynonymMapper
+
+  # RegexEntityExtractor: rule-based extraction for structured
+  # entities like amounts (₹5000), dates (2024-01-15).
+  # Lookup tables defined in nlu.yml feed into this.
+  - name: RegexEntityExtractor
+    case_sensitive: false
+
+  # ── 5. FALLBACK CLASSIFIER ───────────────────────────────
+  # Triggers "utter_default" when intent confidence is below threshold.
+  - name: FallbackClassifier
+    threshold: 0.70
+    ambiguity_threshold: 0.10
+
+# ── POLICIES (Minimal — NLU focus for Module 1) ───────────
+policies:
+  - name: MemoizationPolicy
+    max_history: 5
+  - name: RulePolicy
+    core_fallback_threshold: 0.40
+    core_fallback_action_name: "action_default_fallback"
+    enable_fallback_prediction: true

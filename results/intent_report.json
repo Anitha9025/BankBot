@@ -1,0 +1,159 @@
+{
+  "mini_statement": {
+    "precision": 0.5714285714285714,
+    "recall": 0.6153846153846154,
+    "f1-score": 0.5925925925925927,
+    "support": 13,
+    "confused_with": {
+      "transaction_status": 4,
+      "check_balance": 1
+    }
+  },
+  "affirm": {
+    "precision": 0.625,
+    "recall": 0.5555555555555556,
+    "f1-score": 0.5882352941176471,
+    "support": 9,
+    "confused_with": {
+      "deny": 2,
+      "greet": 1
+    }
+  },
+  "greet": {
+    "precision": 0.5833333333333334,
+    "recall": 0.5833333333333334,
+    "f1-score": 0.5833333333333334,
+    "support": 12,
+    "confused_with": {
+      "goodbye": 3,
+      "deny": 1
+    }
+  },
+  "transaction_status": {
+    "precision": 0.6363636363636364,
+    "recall": 0.5,
+    "f1-score": 0.56,
+    "support": 14,
+    "confused_with": {
+      "mini_statement": 4,
+      "transfer_money": 3
+    }
+  },
+  "change_pin": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 13,
+    "confused_with": {}
+  },
+  "deny": {
+    "precision": 0.3333333333333333,
+    "recall": 0.25,
+    "f1-score": 0.28571428571428575,
+    "support": 8,
+    "confused_with": {
+      "goodbye": 2,
+      "affirm": 2
+    }
+  },
+  "find_atm": {
+    "precision": 1.0,
+    "recall": 0.8461538461538461,
+    "f1-score": 0.9166666666666666,
+    "support": 13,
+    "confused_with": {
+      "find_branch": 2
+    }
+  },
+  "check_balance": {
+    "precision": 0.7333333333333333,
+    "recall": 0.8461538461538461,
+    "f1-score": 0.7857142857142856,
+    "support": 13,
+    "confused_with": {
+      "transfer_money": 2
+    }
+  },
+  "apply_credit_card": {
+    "precision": 0.7692307692307693,
+    "recall": 0.7692307692307693,
+    "f1-score": 0.7692307692307693,
+    "support": 13,
+    "confused_with": {
+      "block_card": 2,
+      "mini_statement": 1
+    }
+  },
+  "open_account": {
+    "precision": 1.0,
+    "recall": 0.8461538461538461,
+    "f1-score": 0.9166666666666666,
+    "support": 13,
+    "confused_with": {
+      "check_balance": 2
+    }
+  },
+  "block_card": {
+    "precision": 0.8125,
+    "recall": 0.9285714285714286,
+    "f1-score": 0.8666666666666666,
+    "support": 14,
+    "confused_with": {
+      "apply_credit_card": 1
+    }
+  },
+  "loan_inquiry": {
+    "precision": 1.0,
+    "recall": 0.9230769230769231,
+    "f1-score": 0.9600000000000001,
+    "support": 13,
+    "confused_with": {
+      "apply_credit_card": 1
+    }
+  },
+  "find_branch": {
+    "precision": 0.8666666666666667,
+    "recall": 1.0,
+    "f1-score": 0.9285714285714286,
+    "support": 13,
+    "confused_with": {}
+  },
+  "goodbye": {
+    "precision": 0.4,
+    "recall": 0.4,
+    "f1-score": 0.4000000000000001,
+    "support": 10,
+    "confused_with": {
+      "greet": 4,
+      "deny": 1
+    }
+  },
+  "transfer_money": {
+    "precision": 0.7058823529411765,
+    "recall": 0.9230769230769231,
+    "f1-score": 0.8000000000000002,
+    "support": 13,
+    "confused_with": {
+      "check_balance": 1
+    }
+  },
+  "accuracy": 0.7554347826086957,
+  "macro avg": {
+    "precision": 0.7358047997753879,
+    "recall": 0.7324460724460724,
+    "f1-score": 0.7302261326182896,
+    "support": 184
+  },
+  "weighted avg": {
+    "precision": 0.7553304325682844,
+    "recall": 0.7554347826086957,
+    "f1-score": 0.751390851026401,
+    "support": 184
+  },
+  "micro avg": {
+    "precision": 0.7554347826086957,
+    "recall": 0.7554347826086957,
+    "f1-score": 0.7554347826086957,
+    "support": 184
+  }
+}

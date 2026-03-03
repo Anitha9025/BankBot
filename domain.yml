@@ -1,0 +1,148 @@
+version: "3.1"
+
+# ═══════════════════════════════════════════════════════════
+#  BANKING AI CHATBOT — Module 1: Intent & Entity Recognition
+#  domain.yml — Intents, Entities, Slots, Responses
+# ═══════════════════════════════════════════════════════════
+
+intents:
+  - check_balance
+  - loan_inquiry
+  - block_card
+  - find_atm
+  - find_branch
+  - transaction_status
+  - transfer_money
+  - mini_statement
+  - open_account
+  - apply_credit_card
+  - change_pin
+  - greet
+  - goodbye
+  - affirm
+  - deny
+
+entities:
+  - account_type
+  - amount
+  - date
+  - location
+  - card_type
+  - loan_type
+
+slots:
+  account_type:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: account_type
+
+  amount:
+    type: float
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: amount
+
+  date:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: date
+
+  location:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: location
+
+  card_type:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: card_type
+
+  loan_type:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: loan_type
+
+responses:
+  utter_greet:
+    - text: "Hello! Welcome to BankAI. How can I assist you today?"
+    - text: "Hi there! I'm your banking assistant. What can I help you with?"
+
+  utter_goodbye:
+    - text: "Thank you for using BankAI. Have a great day!"
+    - text: "Goodbye! Feel free to reach out if you need help."
+
+  utter_check_balance:
+    - text: >
+        Sure! I'll check the balance for your {account_type} account right away.
+        [Connecting to core banking system...]
+
+  utter_loan_inquiry:
+    - text: >
+        I can help you with information about our {loan_type} loan products.
+        Let me fetch the latest rates and terms for you.
+
+  utter_block_card:
+    - text: >
+        I understand you want to block your {card_type} card.
+        For security, please confirm your registered mobile number and I'll proceed immediately.
+
+  utter_find_atm:
+    - text: >
+        Let me find the nearest ATMs in {location} for you.
+        [Searching nearby ATMs...]
+
+  utter_find_branch:
+    - text: >
+        Looking for branch locations in {location}.
+        [Fetching branch details...]
+
+  utter_transaction_status:
+    - text: >
+        I'll check your transaction status for {date}.
+        Please hold while I fetch the details from our records.
+
+  utter_transfer_money:
+    - text: >
+        You'd like to transfer {amount}. Let me verify the details and
+        guide you through a secure transfer process.
+
+  utter_mini_statement:
+    - text: >
+        Here's a quick statement for your {account_type} account.
+        [Fetching last 10 transactions...]
+
+  utter_open_account:
+    - text: >
+        I can help you open a new {account_type} account!
+        Let me walk you through the requirements and process.
+
+  utter_apply_credit_card:
+    - text: >
+        Great choice! I'll assist you with the {card_type} card application.
+        Let me check your eligibility and available card options.
+
+  utter_change_pin:
+    - text: >
+        I'll help you change the PIN for your {card_type} card.
+        Please authenticate yourself before proceeding.
+
+  utter_default:
+    - text: >
+        I'm sorry, I didn't quite understand that. Could you rephrase?
+        I can help with balance checks, loans, card blocking, ATM locations,
+        transfers, and more.
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

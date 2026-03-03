@@ -1,0 +1,362 @@
+[
+  {
+    "text": "Check my recent transactions",
+    "intent": "transaction_status",
+    "intent_prediction": {
+      "name": "mini_statement",
+      "confidence": 0.9697825312614441
+    }
+  },
+  {
+    "text": "View transaction details from last week",
+    "intent": "transaction_status",
+    "intent_prediction": {
+      "name": "mini_statement",
+      "confidence": 0.6306024789810181
+    }
+  },
+  {
+    "text": "Send money via NEFT",
+    "intent": "transfer_money",
+    "intent_prediction": {
+      "name": "check_balance",
+      "confidence": 0.5031448602676392
+    }
+  },
+  {
+    "text": "View 10 transaction history",
+    "intent": "mini_statement",
+    "intent_prediction": {
+      "name": "transaction_status",
+      "confidence": 0.918330729007721
+    }
+  },
+  {
+    "text": "Minimum balance for savings account",
+    "intent": "open_account",
+    "intent_prediction": {
+      "name": "check_balance",
+      "confidence": 0.8608275651931763
+    }
+  },
+  {
+    "text": "How to upgrade my credit card?",
+    "intent": "apply_credit_card",
+    "intent_prediction": {
+      "name": "block_card",
+      "confidence": 0.724590003490448
+    }
+  },
+  {
+    "text": "Good afternoon",
+    "intent": "greet",
+    "intent_prediction": {
+      "name": "goodbye",
+      "confidence": 0.5138096809387207
+    }
+  },
+  {
+    "text": "Namaste",
+    "intent": "greet",
+    "intent_prediction": {
+      "name": "deny",
+      "confidence": 0.31879228353500366
+    }
+  },
+  {
+    "text": "What's up",
+    "intent": "greet",
+    "intent_prediction": {
+      "name": "apply_credit_card",
+      "confidence": 0.2968007028102875
+    }
+  },
+  {
+    "text": "Sure",
+    "intent": "affirm",
+    "intent_prediction": {
+      "name": "deny",
+      "confidence": 0.2588232457637787
+    }
+  },
+  {
+    "text": "No thanks",
+    "intent": "deny",
+    "intent_prediction": {
+      "name": "goodbye",
+      "confidence": 0.9650343060493469
+    }
+  },
+  {
+    "text": "How much money do I have in my savings account?",
+    "intent": "check_balance",
+    "intent_prediction": {
+      "name": "transfer_money",
+      "confidence": 0.3399850130081177
+    }
+  },
+  {
+    "text": "How much is left in my account?",
+    "intent": "check_balance",
+    "intent_prediction": {
+      "name": "transfer_money",
+      "confidence": 0.326803058385849
+    }
+  },
+  {
+    "text": "Where is the nearest ATM in Mumbai?",
+    "intent": "find_atm",
+    "intent_prediction": {
+      "name": "find_branch",
+      "confidence": 0.5427407622337341
+    }
+  },
+  {
+    "text": "What happened to my transfer on March 1st?",
+    "intent": "transaction_status",
+    "intent_prediction": {
+      "name": "transfer_money",
+      "confidence": 0.869057297706604
+    }
+  },
+  {
+    "text": "Get last 10 transactions",
+    "intent": "mini_statement",
+    "intent_prediction": {
+      "name": "transaction_status",
+      "confidence": 0.9938822984695435
+    }
+  },
+  {
+    "text": "Good evening",
+    "intent": "greet",
+    "intent_prediction": {
+      "name": "goodbye",
+      "confidence": 0.599250853061676
+    }
+  },
+  {
+    "text": "Have a good day",
+    "intent": "goodbye",
+    "intent_prediction": {
+      "name": "greet",
+      "confidence": 0.9177449941635132
+    }
+  },
+  {
+    "text": "Cancel",
+    "intent": "deny",
+    "intent_prediction": {
+      "name": "block_card",
+      "confidence": 0.9372915029525757
+    }
+  },
+  {
+    "text": "Never mind",
+    "intent": "deny",
+    "intent_prediction": {
+      "name": "mini_statement",
+      "confidence": 0.362101674079895
+    }
+  },
+  {
+    "text": "Was my transaction on 2024-01-10 successful?",
+    "intent": "transaction_status",
+    "intent_prediction": {
+      "name": "transfer_money",
+      "confidence": 0.9645298719406128
+    }
+  },
+  {
+    "text": "Zero balance savings account",
+    "intent": "open_account",
+    "intent_prediction": {
+      "name": "check_balance",
+      "confidence": 0.9793014526367188
+    }
+  },
+  {
+    "text": "I'm done",
+    "intent": "goodbye",
+    "intent_prediction": {
+      "name": "greet",
+      "confidence": 0.18762068450450897
+    }
+  },
+  {
+    "text": "Go ahead",
+    "intent": "affirm",
+    "intent_prediction": {
+      "name": "greet",
+      "confidence": 0.6359318494796753
+    }
+  },
+  {
+    "text": "Don't do that",
+    "intent": "deny",
+    "intent_prediction": {
+      "name": "goodbye",
+      "confidence": 0.4001043736934662
+    }
+  },
+  {
+    "text": "Skip it",
+    "intent": "deny",
+    "intent_prediction": {
+      "name": "affirm",
+      "confidence": 0.4215320348739624
+    }
+  },
+  {
+    "text": "Can I get a car loan with bad credit?",
+    "intent": "loan_inquiry",
+    "intent_prediction": {
+      "name": "apply_credit_card",
+      "confidence": 0.6528937816619873
+    }
+  },
+  {
+    "text": "Find the nearest cash machine in Pune",
+    "intent": "find_atm",
+    "intent_prediction": {
+      "name": "find_branch",
+      "confidence": 0.726170003414154
+    }
+  },
+  {
+    "text": "Track my fund transfer",
+    "intent": "transaction_status",
+    "intent_prediction": {
+      "name": "transfer_money",
+      "confidence": 0.9908654093742371
+    }
+  },
+  {
+    "text": "Give me a quick account summary",
+    "intent": "mini_statement",
+    "intent_prediction": {
+      "name": "check_balance",
+      "confidence": 0.6977942585945129
+    }
+  },
+  {
+    "text": "Hey, I have a question",
+    "intent": "greet",
+    "intent_prediction": {
+      "name": "goodbye",
+      "confidence": 0.4501197934150696
+    }
+  },
+  {
+    "text": "That's all, thanks",
+    "intent": "goodbye",
+    "intent_prediction": {
+      "name": "deny",
+      "confidence": 0.900589644908905
+    }
+  },
+  {
+    "text": "Farewell",
+    "intent": "goodbye",
+    "intent_prediction": {
+      "name": "greet",
+      "confidence": 0.3615483343601227
+    }
+  },
+  {
+    "text": "Definitely",
+    "intent": "affirm",
+    "intent_prediction": {
+      "name": "goodbye",
+      "confidence": 0.3645420968532562
+    }
+  },
+  {
+    "text": "That's correct",
+    "intent": "affirm",
+    "intent_prediction": {
+      "name": "deny",
+      "confidence": 0.6691202521324158
+    }
+  },
+  {
+    "text": "Not really",
+    "intent": "deny",
+    "intent_prediction": {
+      "name": "affirm",
+      "confidence": 0.48831987380981445
+    }
+  },
+  {
+    "text": "Cancel my credit card now",
+    "intent": "block_card",
+    "intent_prediction": {
+      "name": "apply_credit_card",
+      "confidence": 0.5012580156326294
+    }
+  },
+  {
+    "text": "Show last 5 transactions",
+    "intent": "transaction_status",
+    "intent_prediction": {
+      "name": "mini_statement",
+      "confidence": 0.9676777720451355
+    }
+  },
+  {
+    "text": "Transaction history for last month",
+    "intent": "transaction_status",
+    "intent_prediction": {
+      "name": "mini_statement",
+      "confidence": 0.9693450331687927
+    }
+  },
+  {
+    "text": "Show recent 5 transactions from savings",
+    "intent": "mini_statement",
+    "intent_prediction": {
+      "name": "transaction_status",
+      "confidence": 0.9498782753944397
+    }
+  },
+  {
+    "text": "Show my last few transactions",
+    "intent": "mini_statement",
+    "intent_prediction": {
+      "name": "transaction_status",
+      "confidence": 0.5650121569633484
+    }
+  },
+  {
+    "text": "How do I get a new credit card?",
+    "intent": "apply_credit_card",
+    "intent_prediction": {
+      "name": "mini_statement",
+      "confidence": 0.3606433570384979
+    }
+  },
+  {
+    "text": "I want a debit card for online purchases",
+    "intent": "apply_credit_card",
+    "intent_prediction": {
+      "name": "block_card",
+      "confidence": 0.27919068932533264
+    }
+  },
+  {
+    "text": "See you later",
+    "intent": "goodbye",
+    "intent_prediction": {
+      "name": "greet",
+      "confidence": 0.6082731485366821
+    }
+  },
+  {
+    "text": "Cheers",
+    "intent": "goodbye",
+    "intent_prediction": {
+      "name": "affirm",
+      "confidence": 0.462836354970932
+    }
+  }
+]

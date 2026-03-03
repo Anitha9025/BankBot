@@ -1,0 +1,65 @@
+{
+  "date": {
+    "precision": 0.8,
+    "recall": 0.2857142857142857,
+    "f1-score": 0.4210526315789473,
+    "support": 14,
+    "confused_with": {
+      "amount": 2
+    }
+  },
+  "loan_type": {
+    "precision": 0.9166666666666666,
+    "recall": 0.8461538461538461,
+    "f1-score": 0.8799999999999999,
+    "support": 13,
+    "confused_with": {}
+  },
+  "location": {
+    "precision": 1.0,
+    "recall": 0.8285714285714286,
+    "f1-score": 0.90625,
+    "support": 35,
+    "confused_with": {}
+  },
+  "amount": {
+    "precision": 0.6666666666666666,
+    "recall": 1.0,
+    "f1-score": 0.8,
+    "support": 12,
+    "confused_with": {}
+  },
+  "account_type": {
+    "precision": 0.9615384615384616,
+    "recall": 1.0,
+    "f1-score": 0.9803921568627451,
+    "support": 25,
+    "confused_with": {}
+  },
+  "card_type": {
+    "precision": 0.8888888888888888,
+    "recall": 1.0,
+    "f1-score": 0.9411764705882353,
+    "support": 32,
+    "confused_with": {}
+  },
+  "micro avg": {
+    "precision": 0.8968253968253969,
+    "recall": 0.8625954198473282,
+    "f1-score": 0.8793774319066149,
+    "support": 131
+  },
+  "macro avg": {
+    "precision": 0.8722934472934473,
+    "recall": 0.8267399267399268,
+    "f1-score": 0.8214785431716547,
+    "support": 131
+  },
+  "weighted avg": {
+    "precision": 0.9053402492333791,
+    "recall": 0.8625954198473282,
+    "f1-score": 0.8647399833778427,
+    "support": 131
+  },
+  "accuracy": 0.9706477732793523
+}
