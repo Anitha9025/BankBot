@@ -1,0 +1,169 @@
+version: "3.1"
+
+stories:
+
+- story: TEST - balance check with account type
+  steps:
+    - user: |
+        What is my savings account balance?
+      intent: check_balance
+      entities:
+        - account_type: "savings"
+    - slot_was_set:
+        - account_type: "savings"
+    - action: action_check_balance
+
+- story: TEST - balance check slot filling
+  steps:
+    - user: |
+        Check my balance
+      intent: check_balance
+    - action: utter_ask_account_type
+    - user: |
+        savings
+      intent: inform_account_type
+      entities:
+        - account_type: "savings"
+    - slot_was_set:
+        - account_type: "savings"
+    - action: action_check_balance
+
+- story: TEST - transfer money confirmed
+  steps:
+    - user: |
+        Transfer 5000 rupees
+      intent: transfer_money
+      entities:
+        - amount: 5000
+    - slot_was_set:
+        - amount: 5000
+    - action: utter_confirm_transfer
+    - user: |
+        Yes
+      intent: affirm
+    - action: action_transfer_money
+
+- story: TEST - transfer money cancelled
+  steps:
+    - user: |
+        Send 10000
+      intent: transfer_money
+      entities:
+        - amount: 10000
+    - slot_was_set:
+        - amount: 10000
+    - action: utter_confirm_transfer
+    - user: |
+        No cancel it
+      intent: deny
+    - action: utter_transfer_cancelled
+
+- story: TEST - block credit card confirmed
+  steps:
+    - user: |
+        I lost my credit card please block it
+      intent: block_card
+      entities:
+        - card_type: "credit"
+    - slot_was_set:
+        - card_type: "credit"
+    - action: utter_confirm_block_card
+    - user: |
+        Yes block it
+      intent: affirm
+    - action: action_block_card
+
+- story: TEST - home loan inquiry
+  steps:
+    - user: |
+        What are the interest rates for home loans?
+      intent: loan_inquiry
+      entities:
+        - loan_type: "home"
+    - slot_was_set:
+        - loan_type: "home"
+    - action: action_loan_inquiry
+
+- story: TEST - find ATM in Chennai
+  steps:
+    - user: |
+        Where is the nearest ATM in Chennai?
+      intent: find_atm
+      entities:
+        - location: "Chennai"
+    - slot_was_set:
+        - location: "Chennai"
+    - action: action_find_atm
+
+- story: TEST - FAQ working hours
+  steps:
+    - user: |
+        What are your working hours?
+      intent: faq_working_hours
+    - action: utter_faq_working_hours
+
+- story: TEST - human escalation request
+  steps:
+    - user: |
+        I want to speak to a human agent
+      intent: request_human_agent
+    - action: action_escalate_to_human
+
+- story: TEST - out of scope query
+  steps:
+    - user: |
+        What is the weather today?
+      intent: out_of_scope
+    - action: utter_out_of_scope
+
+- story: TEST - complete banking session
+  steps:
+    - user: |
+        Hi there
+      intent: greet
+    - action: utter_greet
+    - user: |
+        My savings account balance please
+      intent: check_balance
+      entities:
+        - account_type: "savings"
+    - slot_was_set:
+        - account_type: "savings"
+    - action: action_check_balance
+    - user: |
+        Transfer 3000 from savings
+      intent: transfer_money
+      entities:
+        - amount: 3000
+        - account_type: "savings"
+    - slot_was_set:
+        - amount: 3000
+        - account_type: "savings"
+    - action: utter_confirm_transfer
+    - user: |
+        Yes confirm
+      intent: affirm
+    - action: action_transfer_money
+    - user: |
+        Thanks bye
+      intent: goodbye
+    - action: utter_goodbye
+
+- story: TEST - context switch loan to ATM
+  steps:
+    - user: |
+        Tell me about car loans
+      intent: loan_inquiry
+      entities:
+        - loan_type: "car"
+    - slot_was_set:
+        - loan_type: "car"
+    - action: action_loan_inquiry
+    - user: |
+        Find me an ATM in Pune
+      intent: find_atm
+      entities:
+        - location: "Pune"
+    - slot_was_set:
+        - location: "Pune"
+    - action: action_find_atm

@@ -1,0 +1,285 @@
+version: "3.1"
+
+stories:
+
+# ── CHECK BALANCE FLOWS (UPDATED — now includes account number step) ──
+
+- story: check balance - account type and number provided upfront
+  steps:
+    - intent: greet
+    - action: utter_greet
+    - intent: check_balance
+      entities:
+        - account_type: "savings"
+    - slot_was_set:
+        - account_type: "savings"
+    - action: utter_ask_account_number        # Bot asks for account number
+    - intent: inform_account_number
+    - slot_was_set:
+        - account_number: "1234567890"
+    - action: action_check_balance            # Now fetches balance
+
+- story: check balance - account type missing then number asked
+  steps:
+    - intent: check_balance
+    - action: utter_ask_account_type          # Bot asks account type
+    - intent: inform_account_type
+      entities:
+        - account_type: "savings"
+    - slot_was_set:
+        - account_type: "savings"
+    - action: utter_ask_account_number        # Bot asks account number
+    - intent: inform_account_number
+    - slot_was_set:
+        - account_number: "9876543210"
+    - action: action_check_balance
+
+- story: check balance - current account with number
+  steps:
+    - intent: check_balance
+      entities:
+        - account_type: "current"
+    - slot_was_set:
+        - account_type: "current"
+    - action: utter_ask_account_number
+    - intent: inform_account_number
+    - slot_was_set:
+        - account_number: "1122334455"
+    - action: action_check_balance
+
+- story: check balance - follow up with mini statement
+  steps:
+    - intent: check_balance
+      entities:
+        - account_type: "savings"
+    - slot_was_set:
+        - account_type: "savings"
+    - action: utter_ask_account_number
+    - intent: inform_account_number
+    - slot_was_set:
+        - account_number: "1234567890"
+    - action: action_check_balance
+    - intent: mini_statement
+    - action: action_mini_statement
+    - intent: goodbye
+    - action: utter_goodbye
+
+# ── MONEY TRANSFER FLOWS ─────────────────────────────────────────────
+
+- story: money transfer - all details provided
+  steps:
+    - intent: transfer_money
+      entities:
+        - amount: 5000
+        - account_type: "savings"
+    - slot_was_set:
+        - amount: 5000
+        - account_type: "savings"
+    - action: action_transfer_money
+
+- story: money transfer - amount missing, bot asks
+  steps:
+    - intent: transfer_money
+    - action: utter_ask_amount
+    - intent: inform_amount
+      entities:
+        - amount: 10000
+    - slot_was_set:
+        - amount: 10000
+    - action: utter_ask_account_type
+    - intent: inform_account_type
+      entities:
+        - account_type: "savings"
+    - slot_was_set:
+        - account_type: "savings"
+    - action: action_transfer_money
+
+- story: money transfer - user confirms
+  steps:
+    - intent: transfer_money
+      entities:
+        - amount: 2500
+    - slot_was_set:
+        - amount: 2500
+    - action: utter_confirm_transfer
+    - intent: affirm
+    - action: action_transfer_money
+
+- story: money transfer - user cancels
+  steps:
+    - intent: transfer_money
+      entities:
+        - amount: 2500
+    - slot_was_set:
+        - amount: 2500
+    - action: utter_confirm_transfer
+    - intent: deny
+    - action: utter_transfer_cancelled
+
+# ── LOAN INQUIRY FLOWS ───────────────────────────────────────────────
+
+- story: loan inquiry - loan type provided
+  steps:
+    - intent: loan_inquiry
+      entities:
+        - loan_type: "home"
+    - slot_was_set:
+        - loan_type: "home"
+    - action: action_loan_inquiry
+    - intent: affirm
+    - action: utter_loan_application_start
+
+- story: loan inquiry - loan type missing, bot asks
+  steps:
+    - intent: loan_inquiry
+    - action: utter_ask_loan_type
+    - intent: inform_loan_type
+      entities:
+        - loan_type: "personal"
+    - slot_was_set:
+        - loan_type: "personal"
+    - action: action_loan_inquiry
+
+- story: loan inquiry - with amount
+  steps:
+    - intent: loan_inquiry
+      entities:
+        - loan_type: "car"
+        - amount: 500000
+    - slot_was_set:
+        - loan_type: "car"
+        - amount: 500000
+    - action: action_loan_inquiry
+
+# ── CARD BLOCKING FLOWS ──────────────────────────────────────────────
+
+- story: block card - card type provided, confirmed
+  steps:
+    - intent: block_card
+      entities:
+        - card_type: "credit"
+    - slot_was_set:
+        - card_type: "credit"
+    - action: utter_confirm_block_card
+    - intent: affirm
+    - action: action_block_card
+
+- story: block card - card type missing, bot asks
+  steps:
+    - intent: block_card
+    - action: utter_ask_card_type
+    - intent: inform_card_type
+      entities:
+        - card_type: "debit"
+    - slot_was_set:
+        - card_type: "debit"
+    - action: utter_confirm_block_card
+    - intent: affirm
+    - action: action_block_card
+
+- story: block card - user cancels
+  steps:
+    - intent: block_card
+      entities:
+        - card_type: "debit"
+    - slot_was_set:
+        - card_type: "debit"
+    - action: utter_confirm_block_card
+    - intent: deny
+    - action: utter_block_cancelled
+
+# ── ATM & BRANCH LOCATOR FLOWS ───────────────────────────────────────
+
+- story: find ATM - location provided
+  steps:
+    - intent: find_atm
+      entities:
+        - location: "Chennai"
+    - slot_was_set:
+        - location: "Chennai"
+    - action: action_find_atm
+
+- story: find ATM - location missing, bot asks
+  steps:
+    - intent: find_atm
+    - action: utter_ask_location
+    - intent: inform_location
+      entities:
+        - location: "Mumbai"
+    - slot_was_set:
+        - location: "Mumbai"
+    - action: action_find_atm
+
+- story: find branch - with follow-up ATM query
+  steps:
+    - intent: find_branch
+      entities:
+        - location: "Bangalore"
+    - slot_was_set:
+        - location: "Bangalore"
+    - action: action_find_branch
+    - intent: find_atm
+    - action: action_find_atm
+
+# ── TRANSACTION STATUS FLOWS ─────────────────────────────────────────
+
+- story: transaction status - with date
+  steps:
+    - intent: transaction_status
+      entities:
+        - date: "15th March"
+    - slot_was_set:
+        - date: "15th March"
+    - action: action_transaction_status
+
+- story: transaction status - no date, bot asks
+  steps:
+    - intent: transaction_status
+    - action: utter_ask_date
+    - intent: inform_date
+      entities:
+        - date: "last week"
+    - slot_was_set:
+        - date: "last week"
+    - action: action_transaction_status
+
+# ── ESCALATION FLOWS ─────────────────────────────────────────────────
+
+- story: user requests human agent
+  steps:
+    - intent: request_human_agent
+    - action: action_escalate_to_human
+
+- story: bot fails twice then escalates
+  steps:
+    - intent: out_of_scope
+    - action: utter_default
+    - intent: out_of_scope
+    - action: action_escalate_to_human
+
+# ── FULL SESSION ─────────────────────────────────────────────────────
+
+- story: full banking session
+  steps:
+    - intent: greet
+    - action: utter_greet
+    - intent: check_balance
+      entities:
+        - account_type: "savings"
+    - slot_was_set:
+        - account_type: "savings"
+    - action: utter_ask_account_number
+    - intent: inform_account_number
+    - slot_was_set:
+        - account_number: "1234567890"
+    - action: action_check_balance
+    - intent: transfer_money
+      entities:
+        - amount: 3000
+    - slot_was_set:
+        - amount: 3000
+    - action: utter_confirm_transfer
+    - intent: affirm
+    - action: action_transfer_money
+    - intent: goodbye
+    - action: utter_goodbye

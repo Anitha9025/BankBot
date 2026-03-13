@@ -1,0 +1,308 @@
+version: "3.1"
+
+nlu:
+
+# ── INFORM ACCOUNT TYPE ──────────────────────────────────────────────
+- intent: inform_account_type
+  examples: |
+    - [savings](account_type)
+    - [current](account_type)
+    - [savings](account_type) account
+    - [current](account_type) account
+    - my [savings](account_type) account
+    - my [current](account_type) account
+    - use [savings](account_type)
+    - use [current](account_type)
+    - the [savings](account_type) one
+    - the [current](account_type) one
+    - I have a [savings](account_type) account
+    - [saving](account_type) account
+    - [saving](account_type)
+    - [savings](account_type) please
+    - [current](account_type) please
+    - from [savings](account_type)
+    - go with [savings](account_type)
+
+- synonym: savings
+  examples: |
+    - saving
+    - savngs
+    - savings account
+    - saving account
+    - SB account
+    - sb
+
+- synonym: current
+  examples: |
+    - curren
+    - currnt
+    - current account
+    - CA account
+    - ca
+
+# ── INFORM ACCOUNT NUMBER ────────────────────────────────────────────
+# CRITICAL FIX: These examples must NOT use the (amount) entity tag.
+# They use (account_number) tag so the model learns these long numbers
+# are account numbers, NOT rupee amounts.
+# Also includes strong keyword phrases like "account number is", "my number"
+# so the model clearly distinguishes this intent from inform_amount.
+
+- intent: inform_account_number
+  examples: |
+    - my account number is [1234567890](account_number)
+    - account number [9876543210](account_number)
+    - [1122334455](account_number) is my account number
+    - it is [4455667788](account_number)
+    - [0011223344](account_number)
+    - [5566778899](account_number)
+    - [6677889900](account_number)
+    - [3344556677](account_number)
+    - [2233445566](account_number)
+    - [8899001122](account_number)
+    - [2345678914](account_number)
+    - [1987654321](account_number)
+    - [3456789012](account_number)
+    - [4567890123](account_number)
+    - [5678901234](account_number)
+    - [6789012345](account_number)
+    - [7890123456](account_number)
+    - [8901234567](account_number)
+    - [9012345678](account_number)
+    - [0123456789](account_number)
+    - number is [1234567890](account_number)
+    - the number is [9876543210](account_number)
+    - my number is [1122334455](account_number)
+    - [4455667788](account_number) please
+    - here is my account number [5566778899](account_number)
+    - acc no [6677889900](account_number)
+    - account no [3344556677](account_number)
+
+# ── INFORM AMOUNT ────────────────────────────────────────────────────
+# CRITICAL FIX: Amount examples now use SMALL numbers with rupee keywords
+# so the model learns amounts are SMALL numbers used in transfer context,
+# NOT large 10-digit numbers like account numbers.
+
+- intent: inform_amount
+  examples: |
+    - [500](amount) rupees
+    - [1000](amount) rupees
+    - [2500](amount) rupees
+    - [5000](amount) rupees
+    - [7500](amount) rupees
+    - [10000](amount) rupees
+    - [15000](amount) rupees
+    - [20000](amount) rupees
+    - [50000](amount) rupees
+    - [100000](amount) rupees
+    - Rs [500](amount)
+    - Rs [5000](amount)
+    - Rs [10000](amount)
+    - Rs [25000](amount)
+    - transfer [500](amount)
+    - transfer [5000](amount)
+    - transfer [10000](amount)
+    - send [500](amount)
+    - send [5000](amount)
+    - send [10000](amount)
+    - about [1000](amount)
+    - just [2000](amount)
+    - [5000](amount) only
+    - [3000](amount) please
+
+# ── INFORM LOCATION ──────────────────────────────────────────────────
+- intent: inform_location
+  examples: |
+    - [Chennai](location)
+    - [Mumbai](location)
+    - [Bangalore](location)
+    - [Hyderabad](location)
+    - [Pune](location)
+    - [Delhi](location)
+    - [Kolkata](location)
+    - [Coimbatore](location)
+    - [Madurai](location)
+    - [T Nagar](location)
+    - [Anna Nagar](location)
+    - near [Chennai](location)
+    - in [Mumbai](location)
+    - at [Bangalore](location)
+    - [Chennai](location) please
+    - I am in [Delhi](location)
+    - close to [Hyderabad](location)
+
+# ── INFORM CARD TYPE ─────────────────────────────────────────────────
+- intent: inform_card_type
+  examples: |
+    - [credit](card_type)
+    - [debit](card_type)
+    - [credit](card_type) card
+    - [debit](card_type) card
+    - it is a [credit](card_type) card
+    - it is a [debit](card_type) card
+    - my [debit](card_type) card
+    - my [credit](card_type) card
+    - the [credit](card_type) one
+    - the [debit](card_type) one
+    - [debit](card_type) please
+    - [credit](card_type) please
+    - use my [debit](card_type)
+    - I use a [debit](card_type)
+    - it is [debit](card_type)
+    - it is [credit](card_type)
+    - visa [debit](card_type)
+
+- synonym: credit
+  examples: |
+    - credit card
+    - CC
+    - mastercard
+    - visa credit
+
+- synonym: debit
+  examples: |
+    - debit card
+    - DC
+    - visa debit
+    - ATM card
+
+# ── INFORM LOAN TYPE ─────────────────────────────────────────────────
+- intent: inform_loan_type
+  examples: |
+    - [home](loan_type)
+    - [personal](loan_type)
+    - [car](loan_type)
+    - [education](loan_type)
+    - [business](loan_type)
+    - [home](loan_type) loan
+    - [personal](loan_type) loan
+    - [car](loan_type) loan
+    - [education](loan_type) loan
+    - [business](loan_type) loan
+    - [home](loan_type) loan please
+    - I want a [home](loan_type) loan
+    - I need a [personal](loan_type) loan
+    - [home](loan_type) please
+    - give me [car](loan_type) loan details
+    - [education](loan_type) loan info
+
+# ── INFORM DATE ──────────────────────────────────────────────────────
+- intent: inform_date
+  examples: |
+    - [yesterday](date)
+    - [last week](date)
+    - [15th March](date)
+    - [January 2024](date)
+    - [last month](date)
+    - [today](date)
+    - [2024-03-15](date)
+    - [this month](date)
+    - [last 7 days](date)
+    - [March 2024](date)
+    - [last 30 days](date)
+    - [this week](date)
+    - [14th February](date)
+
+# ── HUMAN ESCALATION ─────────────────────────────────────────────────
+- intent: request_human_agent
+  examples: |
+    - I want to talk to a human
+    - Connect me to an agent
+    - Speak to a real person
+    - Transfer me to customer support
+    - I need human help
+    - Let me talk to someone
+    - I want live support
+    - Talk to an agent please
+    - human please
+    - agent
+    - talk to human
+    - real person please
+    - customer care
+
+# ── OUT OF SCOPE ──────────────────────────────────────────────────────
+- intent: out_of_scope
+  examples: |
+    - What is the weather today?
+    - Tell me a joke
+    - Who is the prime minister?
+    - Order pizza
+    - Book a flight
+    - Play some music
+    - What movies are playing?
+    - Tell me about cricket scores
+    - Help me with my homework
+
+# ── FAQ INTENTS ───────────────────────────────────────────────────────
+- intent: faq_working_hours
+  examples: |
+    - What are your working hours?
+    - When does the branch open?
+    - What time does the bank close?
+    - Are you open on Saturdays?
+    - Bank timings please
+    - When can I visit the branch?
+    - What are your office hours?
+    - Are you open on Sunday?
+    - bank hours
+
+- intent: faq_minimum_balance
+  examples: |
+    - What is the minimum balance required?
+    - How much do I need to keep in my account?
+    - Minimum balance for savings account?
+    - What happens if I go below minimum balance?
+    - Non-maintenance charges?
+    - What is the MAB requirement?
+
+- intent: faq_interest_rates
+  examples: |
+    - What are your interest rates?
+    - How much interest does my savings account earn?
+    - FD interest rates
+    - Fixed deposit rates
+    - Current savings interest rate
+    - interest rate on home loan
+
+- intent: faq_kyc_documents
+  examples: |
+    - What documents do I need for KYC?
+    - KYC requirements
+    - What ID proof is accepted?
+    - Documents needed for account opening
+    - Is Aadhaar enough for KYC?
+    - What address proof do you accept?
+
+- intent: faq_ifsc_code
+  examples: |
+    - What is the IFSC code of your branch?
+    - How do I find my bank IFSC code?
+    - IFSC code please
+    - Where is the IFSC code on my cheque?
+    - Bank code for NEFT
+
+- intent: faq_transaction_limits
+  examples: |
+    - What is the daily transaction limit?
+    - How much can I transfer in a day?
+    - UPI transfer limit
+    - NEFT limits
+    - IMPS maximum amount
+    - What is the maximum I can send?
+
+- intent: faq_cheque_status
+  examples: |
+    - How do I check my cheque status?
+    - Did my cheque clear?
+    - Cheque clearance time
+    - How long does a cheque take to clear?
+    - Track my cheque
+
+- intent: faq_fixed_deposit
+  examples: |
+    - Tell me about fixed deposits
+    - How do I open an FD?
+    - FD minimum amount
+    - Fixed deposit tenure
+    - Can I break my FD early?
+    - Senior citizen FD rates
+    - Open a fixed deposit

@@ -1,10 +1,5 @@
 version: "3.1"
 
-# ═══════════════════════════════════════════════════════════
-#  BANKING AI CHATBOT — Module 1: Intent & Entity Recognition
-#  domain.yml — Intents, Entities, Slots, Responses
-# ═══════════════════════════════════════════════════════════
-
 intents:
   - check_balance
   - loan_inquiry
@@ -21,9 +16,27 @@ intents:
   - goodbye
   - affirm
   - deny
+  - request_human_agent
+  - out_of_scope
+  - inform_account_type
+  - inform_account_number
+  - inform_amount
+  - inform_location
+  - inform_card_type
+  - inform_loan_type
+  - inform_date
+  - faq_working_hours
+  - faq_minimum_balance
+  - faq_interest_rates
+  - faq_kyc_documents
+  - faq_ifsc_code
+  - faq_transaction_limits
+  - faq_cheque_status
+  - faq_fixed_deposit
 
 entities:
   - account_type
+  - account_number
   - amount
   - date
   - location
@@ -31,19 +44,102 @@ entities:
   - loan_type
 
 slots:
+
   account_type:
     type: text
-    influence_conversation: false
+    influence_conversation: true
     mappings:
       - type: from_entity
         entity: account_type
+      - type: from_text
+        intent: inform_account_type
+        not_intent:
+          - greet
+          - goodbye
+          - out_of_scope
+          - request_human_agent
+          - inform_account_number   # CRITICAL: block account number replies from filling this slot
 
+  # ── ACCOUNT NUMBER SLOT ─────────────────────────────────────────
+  # CRITICAL FIX: This slot only fills from inform_account_number intent.
+  # It will NEVER fill from inform_amount, transfer_money, or any other intent.
+  # This prevents the 10-digit account number being treated as a rupee amount.
+  account_number:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: account_number
+      - type: from_text
+        intent: inform_account_number   # ONLY fills when user is responding to account number question
+        not_intent:
+          - greet
+          - goodbye
+          - out_of_scope
+          - request_human_agent
+          - transfer_money             # CRITICAL: transfer intent must never fill account_number
+          - inform_amount              # CRITICAL: amount replies must never fill account_number
+          - check_balance
+          - inform_account_type
+
+  # ── AMOUNT SLOT ─────────────────────────────────────────────────
+  # CRITICAL FIX: amount slot is BLOCKED from filling during
+  # inform_account_number intent — so typing an account number
+  # never accidentally becomes a rupee amount.
   amount:
     type: float
-    influence_conversation: false
+    influence_conversation: true
     mappings:
       - type: from_entity
         entity: amount
+      - type: from_text
+        intent: inform_amount
+        not_intent:
+          - greet
+          - goodbye
+          - out_of_scope
+          - inform_account_number      # CRITICAL: account number replies must never fill amount
+          - check_balance
+          - inform_account_type
+
+  location:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: location
+      - type: from_text
+        intent: inform_location
+        not_intent:
+          - greet
+          - goodbye
+          - out_of_scope
+
+  card_type:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: card_type
+      - type: from_text
+        intent: inform_card_type
+        not_intent:
+          - greet
+          - goodbye
+          - out_of_scope
+
+  loan_type:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: loan_type
+      - type: from_text
+        intent: inform_loan_type
+        not_intent:
+          - greet
+          - goodbye
+          - out_of_scope
 
   date:
     type: text
@@ -51,98 +147,129 @@ slots:
     mappings:
       - type: from_entity
         entity: date
+      - type: from_text
+        intent: inform_date
 
-  location:
-    type: text
+  consecutive_fallback_count:
+    type: float
+    initial_value: 0
+    influence_conversation: true
+    mappings:
+      - type: custom
+
+  escalation_triggered:
+    type: bool
+    initial_value: false
     influence_conversation: false
     mappings:
-      - type: from_entity
-        entity: location
+      - type: custom
 
-  card_type:
-    type: text
-    influence_conversation: false
-    mappings:
-      - type: from_entity
-        entity: card_type
-
-  loan_type:
-    type: text
-    influence_conversation: false
-    mappings:
-      - type: from_entity
-        entity: loan_type
+actions:
+  - action_check_balance
+  - action_transfer_money
+  - action_loan_inquiry
+  - action_block_card
+  - action_find_atm
+  - action_find_branch
+  - action_transaction_status
+  - action_mini_statement
+  - action_escalate_to_human
+  - action_default_fallback
 
 responses:
+
   utter_greet:
-    - text: "Hello! Welcome to BankAI. How can I assist you today?"
-    - text: "Hi there! I'm your banking assistant. What can I help you with?"
+    - text: "Hello! Welcome to BankAI — your 24/7 banking assistant. How can I help you today?"
+    - text: "Hi there! I am BankAI. I can help with balance checks, transfers, loans, card issues, and more."
 
   utter_goodbye:
-    - text: "Thank you for using BankAI. Have a great day!"
-    - text: "Goodbye! Feel free to reach out if you need help."
+    - text: "Thank you for banking with us. Have a great day!"
+    - text: "Goodbye! Your security is our priority. Take care!"
 
-  utter_check_balance:
-    - text: >
-        Sure! I'll check the balance for your {account_type} account right away.
-        [Connecting to core banking system...]
+  utter_affirm_acknowledged:
+    - text: "Great! Let me proceed with that."
 
-  utter_loan_inquiry:
-    - text: >
-        I can help you with information about our {loan_type} loan products.
-        Let me fetch the latest rates and terms for you.
+  utter_deny_acknowledged:
+    - text: "No problem! Is there anything else I can help you with?"
 
-  utter_block_card:
-    - text: >
-        I understand you want to block your {card_type} card.
-        For security, please confirm your registered mobile number and I'll proceed immediately.
+  utter_ask_account_type:
+    - text: "Which account would you like — savings or current?"
 
-  utter_find_atm:
-    - text: >
-        Let me find the nearest ATMs in {location} for you.
-        [Searching nearby ATMs...]
+  utter_ask_account_number:
+    - text: "Please enter your 10-digit account number to proceed."
 
-  utter_find_branch:
-    - text: >
-        Looking for branch locations in {location}.
-        [Fetching branch details...]
+  utter_ask_amount:
+    - text: "How much would you like to transfer? Please type the amount in rupees. For example: 5000 rupees."
 
-  utter_transaction_status:
-    - text: >
-        I'll check your transaction status for {date}.
-        Please hold while I fetch the details from our records.
+  utter_ask_location:
+    - text: "Which city are you in? Please type your city name."
 
-  utter_transfer_money:
-    - text: >
-        You'd like to transfer {amount}. Let me verify the details and
-        guide you through a secure transfer process.
+  utter_ask_card_type:
+    - text: "Is this for your credit card or debit card? Please type credit or debit."
 
-  utter_mini_statement:
-    - text: >
-        Here's a quick statement for your {account_type} account.
-        [Fetching last 10 transactions...]
+  utter_ask_loan_type:
+    - text: "What type of loan? Please type: home, car, personal, education, or business."
 
-  utter_open_account:
-    - text: >
-        I can help you open a new {account_type} account!
-        Let me walk you through the requirements and process.
+  utter_ask_date:
+    - text: "For which date or period? For example: yesterday, last week, or 15th March."
 
-  utter_apply_credit_card:
-    - text: >
-        Great choice! I'll assist you with the {card_type} card application.
-        Let me check your eligibility and available card options.
+  utter_confirm_transfer:
+    - text: "You want to transfer Rs.{amount}. Shall I proceed? Type Yes to confirm or No to cancel."
 
-  utter_change_pin:
-    - text: >
-        I'll help you change the PIN for your {card_type} card.
-        Please authenticate yourself before proceeding.
+  utter_transfer_cancelled:
+    - text: "Transfer cancelled. No funds have been moved. Is there anything else I can help you with?"
+
+  utter_confirm_block_card:
+    - text: "You want to block your {card_type} card. This is immediate and cannot be undone without visiting a branch. Type Yes to confirm or No to cancel."
+
+  utter_block_cancelled:
+    - text: "Card block cancelled. Your {card_type} card remains active. If you suspect fraud, call 1800-XXX-XXXX immediately."
+
+  utter_loan_application_start:
+    - text: "To apply for a {loan_type} loan, you need PAN Card, Aadhaar Card, last 6 months bank statement, and income proof. Would you like to schedule a call with our loan officer?"
+
+  utter_open_account_info:
+    - text: "To open a new account you need PAN Card, Aadhaar Card, 2 passport photos, and an initial deposit of Rs.500 minimum. You can apply online or visit your nearest branch."
+
+  utter_apply_credit_card_info:
+    - text: "To apply for a credit card: Age 21-60, minimum annual income Rs.2.5 lakhs, credit score 750 or above. Shall I initiate an application check?"
+
+  utter_change_pin_instructions:
+    - text: "To change your PIN: Visit any BankAI ATM, insert card, select PIN Change, enter old PIN, set new 4-digit PIN. You can also change it via our mobile app under Card Settings."
+
+  utter_faq_working_hours:
+    - text: "Branch Hours: Monday-Friday 9:30 AM to 4:30 PM, Saturday 9:30 AM to 1:30 PM. Call Centre: 24/7 at 1800-XXX-XXXX. Online Banking and this chatbot: always available."
+
+  utter_faq_minimum_balance:
+    - text: "Minimum Balance: Savings Metro Rs.10,000, Semi-urban Rs.5,000, Rural Rs.2,500. Current Account Rs.25,000. Non-maintenance charges apply if you go below the limit."
+
+  utter_faq_interest_rates:
+    - text: "Interest Rates: Savings Account 3.5% per annum. Fixed Deposit 1 year 7.1% per annum. Home Loan from 8.5% per annum. Personal Loan from 10.5% per annum. Car Loan from 9.0% per annum."
+
+  utter_faq_kyc_documents:
+    - text: "KYC Documents: Identity Proof — Aadhaar, PAN, Passport, or Voter ID. Address Proof — Aadhaar, Utility Bill last 3 months, or Bank Statement."
+
+  utter_faq_ifsc_code:
+    - text: "Find your IFSC code on your cheque book front page, on your passbook, or at www.bankname.com/ifsc."
+
+  utter_faq_transaction_limits:
+    - text: "Daily Limits: NEFT no limit, RTGS minimum Rs.2 lakhs, IMPS up to Rs.5 lakhs, UPI up to Rs.1 lakh, ATM withdrawal Rs.25,000 to Rs.1 lakh based on card type."
+
+  utter_faq_cheque_status:
+    - text: "Check cheque status via Net Banking under Accounts, or call 1800-XXX-XXXX with your cheque number. Cheques clear in 2 to 3 working days."
+
+  utter_faq_fixed_deposit:
+    - text: "Fixed Deposits: Minimum Rs.10,000, tenure 7 days to 10 years, interest 5.5% to 7.1% per annum. Senior citizen bonus 0.5% extra. Premature withdrawal allowed with penalty."
 
   utter_default:
-    - text: >
-        I'm sorry, I didn't quite understand that. Could you rephrase?
-        I can help with balance checks, loans, card blocking, ATM locations,
-        transfers, and more.
+    - text: "I am sorry, I did not quite understand that. I can help you with account balance, fund transfers, loan inquiries, card blocking, ATM or branch locator, and FAQs. Please try rephrasing, or type agent to speak with a human."
+
+  utter_out_of_scope:
+    - text: "That is outside my area of expertise as a banking assistant. Would you like to speak with a human agent?"
+
+  utter_escalating:
+    - text: "Connecting you to a human agent. You can also call 1800-XXX-XXXX which is toll-free and 24/7."
 
 session_config:
   session_expiration_time: 60
-  carry_over_slots_to_new_session: true
+  carry_over_slots_to_new_session: false

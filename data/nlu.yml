@@ -1,0 +1,268 @@
+version: "3.1"
+
+nlu:
+
+# ─────────────────────────────────────────────
+# 1. CHECK BALANCE
+# ─────────────────────────────────────────────
+- intent: check_balance
+  examples: |
+    - What is my account balance?
+    - Show me my current balance
+    - How much money do I have in my [savings](account_type) account?
+    - Check balance for my [current](account_type) account
+    - What's the balance on my [savings](account_type) account?
+    - I want to see my account balance
+    - Tell me my [current](account_type) account balance
+    - Can you display my balance?
+    - How much is left in my account?
+    - What is my available balance right now?
+    - Balance inquiry for [savings](account_type) account
+    - Show balance details for my [current](account_type) account
+    - Please check my bank balance
+    
+# ─────────────────────────────────────────────
+# 2. LOAN INQUIRY
+# ─────────────────────────────────────────────
+- intent: loan_inquiry
+  examples: |
+    - I want to apply for a [home](loan_type) loan
+    - What are the interest rates for [personal](loan_type) loans?
+    - Tell me about [car](loan_type) loan options
+    - How do I apply for a [education](loan_type) loan?
+    - What is the EMI for a [home](loan_type) loan of [500000](amount)?
+    - I need details about [business](loan_type) loans
+    - What documents are required for a [personal](loan_type) loan?
+    - Can I get a [car](loan_type) loan with bad credit?
+    - What is the eligibility for a [home](loan_type) loan?
+    - Apply for [education](loan_type) loan
+    - How long does it take to get a [personal](loan_type) loan approved?
+    - What is the maximum amount for a [business](loan_type) loan?
+    - Show me [home](loan_type) loan interest rates
+
+# ─────────────────────────────────────────────
+# 3. BLOCK CARD
+# ─────────────────────────────────────────────
+- intent: block_card
+  examples: |
+    - I want to block my [credit](card_type) card
+    - Please block my [debit](card_type) card immediately
+    - My [credit](card_type) card was stolen, block it
+    - I lost my [debit](card_type) card, please block it
+    - Block card
+    - Suspend my [credit](card_type) card
+    - I need to freeze my [debit](card_type) card
+    - Cancel my [credit](card_type) card now
+    - Temporarily block my [debit](card_type) card
+    - My card is missing, block it right away
+    - Lock my [credit](card_type) card
+    - How do I block my [debit](card_type) card?
+    - Emergency card block for my [credit](card_type) card
+    - Disable my [debit](card_type) card
+
+# ─────────────────────────────────────────────
+# 4. ATM LOCATOR
+# ─────────────────────────────────────────────
+- intent: find_atm
+  examples: |
+    - Where is the nearest ATM in [Mumbai](location)?
+    - Find ATM near [Chennai](location)
+    - I need an ATM near [Connaught Place](location)
+    - Show me ATMs in [Bangalore](location)
+    - ATM locations near [Hyderabad](location)
+    - What is the closest ATM to [Anna Nagar](location)?
+    - Is there an ATM near [T Nagar, Chennai](location)?
+    - Locate ATM in [Delhi](location)
+    - How do I find an ATM near [Kolkata](location)?
+    - Find the nearest cash machine in [Pune](location)
+    - Are there any ATMs in [Coimbatore](location)?
+    - Get ATM locations for [Madurai](location)
+    - Nearest bank ATM to [Andheri](location)
+
+# ─────────────────────────────────────────────
+# 5. BRANCH LOCATOR
+# ─────────────────────────────────────────────
+- intent: find_branch
+  examples: |
+    - Where is the nearest branch in [Mumbai](location)?
+    - Find a bank branch near [Chennai](location)
+    - Show me branches in [Bangalore](location)
+    - What is the nearest branch to [Hyderabad](location)?
+    - I need to visit a branch in [Delhi](location)
+    - Branch locator for [Pune](location)
+    - List all branches in [Kolkata](location)
+    - Are there branches open on weekends in [Chennai](location)?
+    - Bank branch address in [T Nagar](location)
+    - Find closest branch to [Coimbatore](location)
+    - Show branch timings in [Anna Nagar](location)
+    - Nearest branch from [Andheri, Mumbai](location)
+    - Which branch is closest to [Salt Lake, Kolkata](location)?
+
+# ─────────────────────────────────────────────
+# 6. TRANSACTION STATUS
+# ─────────────────────────────────────────────
+- intent: transaction_status
+  examples: |
+    - What is the status of my transaction?
+    - Check my recent transactions
+    - Show transactions from [January 2024](date)
+    - I made a payment on [15th March](date), did it go through?
+    - Was my transaction on [2024-01-10](date) successful?
+    - Track my fund transfer
+    - Show last 5 transactions
+    - Why is my transaction pending?
+    - Transaction history for [last month](date)
+    - Did my payment on [yesterday](date) get processed?
+    - Show me failed transactions
+    - What happened to my transfer on [March 1st](date)?
+    - Check if my payment was debited on [10th January](date)
+    - View transaction details from [last week](date)
+
+# ─────────────────────────────────────────────
+# 7. MONEY TRANSFER
+# ─────────────────────────────────────────────
+- intent: transfer_money
+  examples: |
+    - Transfer [5000](amount) rupees to my friend
+    - Send [10000](amount) to account
+    - I want to transfer [2500](amount) from [savings](account_type) to [current](account_type) account
+    - How do I transfer [50000](amount)?
+    - Move [1000](amount) from [current](account_type) account
+    - Transfer funds between accounts
+    - Send money via NEFT
+    - Do an IMPS transfer of [3000](amount)
+    - I need to send [7500](amount) urgently
+    - Transfer [20000](amount) to my [savings](account_type) account
+    - Wire transfer of [100000](amount)
+    - Send [500](amount) to a UPI number
+    - Transfer [15000](amount) from [current](account_type) account today
+
+# ─────────────────────────────────────────────
+# 8. MINI STATEMENT
+# ─────────────────────────────────────────────
+- intent: mini_statement
+  examples: |
+    - Show me my mini statement
+    - I need a mini statement for my [savings](account_type) account
+    - Get last 10 transactions
+    - Print mini statement
+    - View mini statement for [current](account_type) account
+    - Show recent 5 transactions from [savings](account_type)
+    - Mini statement please
+    - Can I see a short statement of my [current](account_type) account?
+    - Give me a quick account summary
+    - Show my last few transactions
+    - Account mini statement for [savings](account_type)
+    - View 10 transaction history
+    - Get a brief account statement
+
+# ─────────────────────────────────────────────
+# 9. ACCOUNT OPENING
+# ─────────────────────────────────────────────
+- intent: open_account
+  examples: |
+    - I want to open a [savings](account_type) account
+    - How do I open a new bank account?
+    - Open a [current](account_type) account for my business
+    - What are the steps to open a [savings](account_type) account?
+    - I'd like to create a new account
+    - Documents needed to open [savings](account_type) account
+    - How long does it take to open an account?
+    - Can I open a [current](account_type) account online?
+    - Minimum balance for [savings](account_type) account
+    - Open a bank account for a student
+    - What is required to open a [savings](account_type) account?
+    - New account opening procedure for [current](account_type) account
+    - Zero balance [savings](account_type) account
+
+# ─────────────────────────────────────────────
+# 10. CREDIT CARD APPLY
+# ─────────────────────────────────────────────
+- intent: apply_credit_card
+  examples: |
+    - I want to apply for a [credit](card_type) card
+    - How do I get a new [credit](card_type) card?
+    - Eligibility for [credit](card_type) card application
+    - Apply for a rewards [credit](card_type) card
+    - What credit cards do you offer?
+    - I need a [credit](card_type) card with cashback
+    - How to upgrade my [credit](card_type) card?
+    - Credit card application status
+    - Apply for a premium [credit](card_type) card
+    - What documents are required for [credit](card_type) card?
+    - Best [credit](card_type) card for travel
+    - I want a [debit](card_type) card for online purchases
+    - Platinum [credit](card_type) card application
+
+# ─────────────────────────────────────────────
+# 11. CHANGE PIN
+# ─────────────────────────────────────────────
+- intent: change_pin
+  examples: |
+    - I want to change my [debit](card_type) card PIN
+    - How do I reset my [credit](card_type) card PIN?
+    - Change PIN for my card
+    - Forgot my [debit](card_type) card PIN
+    - Reset ATM PIN for [credit](card_type) card
+    - How to generate a new PIN for [debit](card_type) card?
+    - Update my ATM PIN
+    - I need to change my [debit](card_type) card password
+    - PIN change request for [credit](card_type) card
+    - How to set a new PIN?
+    - ATM PIN reset for my [debit](card_type) card
+    - Help me change my card PIN
+    - Regenerate PIN for [credit](card_type) card
+
+# ─────────────────────────────────────────────
+# 12. GREETING / SMALL TALK
+# ─────────────────────────────────────────────
+- intent: greet
+  examples: |
+    - Hi
+    - Hello
+    - Hey there
+    - Good morning
+    - Good afternoon
+    - Good evening
+    - Hi, I need help
+    - Hello, can you assist me?
+    - Hey, I have a question
+    - Namaste
+    - Howdy
+    - What's up
+
+- intent: goodbye
+  examples: |
+    - Bye
+    - Goodbye
+    - See you later
+    - That's all, thanks
+    - I'm done
+    - Thanks, bye
+    - Have a good day
+    - Cheers
+    - Farewell
+    - Nothing else, bye
+
+- intent: affirm
+  examples: |
+    - Yes
+    - Sure
+    - Of course
+    - Definitely
+    - Yes please
+    - That's correct
+    - Go ahead
+    - Please do
+    - Confirm
+
+- intent: deny
+  examples: |
+    - No
+    - Nope
+    - Not really
+    - Cancel
+    - Never mind
+    - Don't do that
+    - No thanks
+    - Skip it

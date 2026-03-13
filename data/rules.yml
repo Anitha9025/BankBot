@@ -1,0 +1,86 @@
+version: "3.1"
+
+rules:
+
+  # ── GREETINGS & GOODBYE ──────────────────────────────────────────
+  - rule: Greet the user
+    steps:
+      - intent: greet
+      - action: utter_greet
+
+  - rule: Say goodbye to user
+    steps:
+      - intent: goodbye
+      - action: utter_goodbye
+
+  # ── AFFIRMATION & DENIAL ─────────────────────────────────────────
+  # (Removed generic rules for affirm/deny to rely on dialogue stories for context-aware responses)
+
+  # ── FAQ RULES ────────────────────────────────────────────────────
+  - rule: FAQ - Working hours
+    steps:
+      - intent: faq_working_hours
+      - action: utter_faq_working_hours
+
+  - rule: FAQ - Minimum balance
+    steps:
+      - intent: faq_minimum_balance
+      - action: utter_faq_minimum_balance
+
+  - rule: FAQ - Interest rates
+    steps:
+      - intent: faq_interest_rates
+      - action: utter_faq_interest_rates
+
+  - rule: FAQ - KYC documents
+    steps:
+      - intent: faq_kyc_documents
+      - action: utter_faq_kyc_documents
+
+  - rule: FAQ - IFSC code
+    steps:
+      - intent: faq_ifsc_code
+      - action: utter_faq_ifsc_code
+
+  - rule: FAQ - Transaction limits
+    steps:
+      - intent: faq_transaction_limits
+      - action: utter_faq_transaction_limits
+
+  - rule: FAQ - Cheque status
+    steps:
+      - intent: faq_cheque_status
+      - action: utter_faq_cheque_status
+
+  - rule: FAQ - Fixed deposit
+    steps:
+      - intent: faq_fixed_deposit
+      - action: utter_faq_fixed_deposit
+
+  # ── ACCOUNT & CARD SERVICES ──────────────────────────────────────
+  - rule: Change PIN
+    steps:
+      - intent: change_pin
+      - action: utter_change_pin_instructions
+
+  - rule: Open account inquiry
+    steps:
+      - intent: open_account
+      - action: utter_open_account_info
+
+  - rule: Apply credit card inquiry
+    steps:
+      - intent: apply_credit_card
+      - action: utter_apply_credit_card_info
+
+  # ── HUMAN ESCALATION ─────────────────────────────────────────────
+  - rule: Escalate to human agent on request
+    steps:
+      - intent: request_human_agent
+      - action: action_escalate_to_human
+
+  # ── FALLBACK HANDLING ────────────────────────────────────────────
+  - rule: NLU fallback - bot did not understand
+    steps:
+      - intent: nlu_fallback
+      - action: action_default_fallback
