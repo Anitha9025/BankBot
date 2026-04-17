@@ -6,3 +6,6 @@ __pycache__/
 .env
 .rasa/cache/
 .rasa/models/
+models/
+*.tar.gz
+train_error*.log
