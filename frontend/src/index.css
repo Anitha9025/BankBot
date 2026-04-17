@@ -1,0 +1,52 @@
+/* ─── Global Design System ───────────────────────────────────── */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+/* CSS Custom Properties — Dark Banking Theme */
+:root {
+  --primary:       #6366f1;   /* indigo-500 */
+  --primary-dark:  #4f46e5;   /* indigo-600 */
+  --primary-light: #818cf8;   /* indigo-400 */
+
+  --bg:            #0f1117;   /* near-black */
+  --surface:       #1a1d27;   /* card surface */
+  --surface-raised:#222536;   /* slightly lighter card */
+  --surface-input: #2a2d3e;   /* input background */
+
+  --text:          #e2e8f0;
+  --text-muted:    #64748b;
+
+  color-scheme: dark;
+}
+
+/* Reset */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body, #root {
+  height: 100%;
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Subtle grid background on the page */
+body {
+  background-image:
+    linear-gradient(rgba(99,102,241,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99,102,241,0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Shared animation (referenced by component CSS) */
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Scrollbar global */
+* { scrollbar-width: thin; scrollbar-color: rgba(99,102,241,0.3) transparent; }
+*::-webkit-scrollbar       { width: 6px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb { background: rgba(99,102,241,0.3); border-radius: 3px; }

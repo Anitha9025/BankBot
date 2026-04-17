@@ -1,0 +1,36 @@
+version: "3.1"
+
+intents:
+
+  - affirm
+  - apply_credit_card
+  - block_card
+  - change_pin
+  - check_balance
+  - deny
+  - faq_cheque_status
+  - faq_fixed_deposit
+  - faq_ifsc_code
+  - faq_interest_rates
+  - faq_kyc_documents
+  - faq_minimum_balance
+  - faq_transaction_limits
+  - faq_working_hours
+  - find_atm
+  - find_branch
+  - goodbye
+  - greet
+  - inform_account_number
+  - inform_account_type
+  - inform_amount
+  - inform_card_type
+  - inform_date
+  - inform_loan_type
+  - inform_location
+  - loan_inquiry
+  - mini_statement
+  - open_account
+  - out_of_scope
+  - request_human_agent
+  - transaction_status
+  - transfer_money

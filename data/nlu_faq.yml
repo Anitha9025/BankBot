@@ -1,0 +1,35 @@
+version: "3.1"
+
+nlu:
+
+- intent: faq_admin_8
+  examples: |
+    - What time does the bank close?
+
+- intent: faq_admin_9
+  examples: |
+    - What is the minimum balance required?
+
+- intent: faq_admin_10
+  examples: |
+    - Current savings interest rate
+
+- intent: faq_admin_11
+  examples: |
+    - What ID proof is accepted?
+
+- intent: faq_admin_12
+  examples: |
+    - Bank code for NEFT
+
+- intent: faq_admin_13
+  examples: |
+    - What is the daily transaction limit?
+
+- intent: faq_admin_14
+  examples: |
+    - How long does a cheque take to clear?
+
+- intent: faq_admin_15
+  examples: |
+    - How do I open an FD?

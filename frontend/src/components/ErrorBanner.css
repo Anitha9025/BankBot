@@ -1,0 +1,41 @@
+/* ─── ErrorBanner ────────────────────────────────────────────── */
+
+.error-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 20px;
+  padding: 10px 14px;
+  background: rgba(239, 68, 68, 0.14);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  border-radius: 10px;
+  animation: fadeSlideIn 0.22s ease-out;
+}
+
+.error-icon { font-size: 1.1rem; flex-shrink: 0; }
+
+.error-text {
+  flex: 1;
+  font-size: 0.88rem;
+  color: #fca5a5;
+  line-height: 1.4;
+}
+
+.error-dismiss {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #fca5a5;
+  font-size: 0.9rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  opacity: 0.7;
+  transition: opacity 0.15s;
+}
+
+.error-dismiss:hover { opacity: 1; }
+
+@media (max-width: 640px) {
+  .error-banner { margin: 0 12px; }
+}

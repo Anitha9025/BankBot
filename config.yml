@@ -24,10 +24,13 @@ pipeline:
   random_seed: 42
   ranking_length: 10
 - name: EntitySynonymMapper
-  # RegexEntityExtractor REMOVED — causes warning and conflicts with DIETClassifier
+- name: RegexEntityExtractor
+  use_lookup_tables: true
 - name: FallbackClassifier
-  threshold: 0.65            # Lowered from 0.70 — gives more tolerance for short replies
+  threshold: 0.30            # Low threshold — allows short digit replies to pass NLU
   ambiguity_threshold: 0.10
+
+
 
 policies:
 - name: RulePolicy    #AI follows rules
@@ -45,7 +48,5 @@ policies:
   model_confidence: softmax
   ranking_length: 10
 
-- name: UnexpecTEDIntentPolicy   #AI learns from unexpected conversations
-  max_history: 8
-  epochs: 100
 assistant_id: 20260304-002229-wan-heather
+

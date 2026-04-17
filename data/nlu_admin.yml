@@ -1,0 +1,525 @@
+version: "3.1"
+
+nlu:
+
+- intent: affirm
+  examples: |
+    - Yes
+    - Sure
+    - Of course
+    - Definitely
+    - Yes please
+    - That's correct
+    - Go ahead
+    - Please do
+    - Confirm
+
+- intent: apply_credit_card
+  examples: |
+    - I want to apply for a [credit](card_type) card
+    - How do I get a new [credit](card_type) card?
+    - Eligibility for [credit](card_type) card application
+    - Apply for a rewards [credit](card_type) card
+    - What credit cards do you offer?
+    - I need a [credit](card_type) card with cashback
+    - How to upgrade my [credit](card_type) card?
+    - Credit card application status
+    - Apply for a premium [credit](card_type) card
+    - What documents are required for [credit](card_type) card?
+    - Best [credit](card_type) card for travel
+    - I want a [debit](card_type) card for online purchases
+    - Platinum [credit](card_type) card application
+
+- intent: block_card
+  examples: |
+    - I want to block my [credit](card_type) card
+    - Please block my [debit](card_type) card immediately
+    - My [credit](card_type) card was stolen, block it
+    - I lost my [debit](card_type) card, please block it
+    - Block card
+    - Suspend my [credit](card_type) card
+    - I need to freeze my [debit](card_type) card
+    - Cancel my [credit](card_type) card now
+    - Temporarily block my [debit](card_type) card
+    - My card is missing, block it right away
+    - Lock my [credit](card_type) card
+    - How do I block my [debit](card_type) card?
+    - Emergency card block for my [credit](card_type) card
+    - Disable my [debit](card_type) card
+
+- intent: change_pin
+  examples: |
+    - I want to change my [debit](card_type) card PIN
+    - How do I reset my [credit](card_type) card PIN?
+    - Change PIN for my card
+    - Forgot my [debit](card_type) card PIN
+    - Reset ATM PIN for [credit](card_type) card
+    - How to generate a new PIN for [debit](card_type) card?
+    - Update my ATM PIN
+    - I need to change my [debit](card_type) card password
+    - PIN change request for [credit](card_type) card
+    - How to set a new PIN?
+    - ATM PIN reset for my [debit](card_type) card
+    - Help me change my card PIN
+    - Regenerate PIN for [credit](card_type) card
+
+- intent: check_balance
+  examples: |
+    - What is my account balance?
+    - Show me my current balance
+    - How much money do I have in my [savings](account_type) account?
+    - Check balance for my [current](account_type) account
+    - What's the balance on my [savings](account_type) account?
+    - I want to see my account balance
+    - Tell me my [current](account_type) account balance
+    - Can you display my balance?
+    - How much is left in my account?
+    - What is my available balance right now?
+    - Balance inquiry for [savings](account_type) account
+    - Show balance details for my [current](account_type) account
+    - Please check my bank balance
+
+- intent: deny
+  examples: |
+    - No
+    - Nope
+    - Not really
+    - Cancel
+    - Never mind
+    - Don't do that
+    - No thanks
+    - Skip it
+
+- intent: faq_cheque_status
+  examples: |
+    - How do I check my cheque status?
+    - Did my cheque clear?
+    - Cheque clearance time
+    - How long does a cheque take to clear?
+    - Track my cheque
+
+- intent: faq_fixed_deposit
+  examples: |
+    - Tell me about fixed deposits
+    - How do I open an FD?
+    - FD minimum amount
+    - Fixed deposit tenure
+    - Can I break my FD early?
+    - Senior citizen FD rates
+    - Open a fixed deposit
+
+- intent: faq_ifsc_code
+  examples: |
+    - What is the IFSC code of your branch?
+    - How do I find my bank IFSC code?
+    - IFSC code please
+    - Where is the IFSC code on my cheque?
+    - Bank code for NEFT
+
+- intent: faq_interest_rates
+  examples: |
+    - What are your interest rates?
+    - How much interest does my savings account earn?
+    - FD interest rates
+    - Fixed deposit rates
+    - Current savings interest rate
+    - interest rate on home loan
+
+- intent: faq_kyc_documents
+  examples: |
+    - What documents do I need for KYC?
+    - KYC requirements
+    - What ID proof is accepted?
+    - Documents needed for account opening
+    - Is Aadhaar enough for KYC?
+    - What address proof do you accept?
+
+- intent: faq_minimum_balance
+  examples: |
+    - What is the minimum balance required?
+    - How much do I need to keep in my account?
+    - Minimum balance for savings account?
+    - What happens if I go below minimum balance?
+    - Non-maintenance charges?
+    - What is the MAB requirement?
+
+- intent: faq_transaction_limits
+  examples: |
+    - What is the daily transaction limit?
+    - How much can I transfer in a day?
+    - UPI transfer limit
+    - NEFT limits
+    - IMPS maximum amount
+    - What is the maximum I can send?
+
+- intent: faq_working_hours
+  examples: |
+    - What are your working hours?
+    - When does the branch open?
+    - What time does the bank close?
+    - Are you open on Saturdays?
+    - Bank timings please
+    - When can I visit the branch?
+    - What are your office hours?
+    - Are you open on Sunday?
+    - bank hours
+
+- intent: find_atm
+  examples: |
+    - Where is the nearest ATM in [Mumbai](location)?
+    - Find ATM near [Chennai](location)
+    - I need an ATM near [Connaught Place](location)
+    - Show me ATMs in [Bangalore](location)
+    - ATM locations near [Hyderabad](location)
+    - What is the closest ATM to [Anna Nagar](location)?
+    - Is there an ATM near [T Nagar, Chennai](location)?
+    - Locate ATM in [Delhi](location)
+    - How do I find an ATM near [Kolkata](location)?
+    - Find the nearest cash machine in [Pune](location)
+    - Are there any ATMs in [Coimbatore](location)?
+    - Get ATM locations for [Madurai](location)
+    - Nearest bank ATM to [Andheri](location)
+
+- intent: find_branch
+  examples: |
+    - Where is the nearest branch in [Mumbai](location)?
+    - Find a bank branch near [Chennai](location)
+    - Show me branches in [Bangalore](location)
+    - What is the nearest branch to [Hyderabad](location)?
+    - I need to visit a branch in [Delhi](location)
+    - Branch locator for [Pune](location)
+    - List all branches in [Kolkata](location)
+    - Are there branches open on weekends in [Chennai](location)?
+    - Bank branch address in [T Nagar](location)
+    - Find closest branch to [Coimbatore](location)
+    - Show branch timings in [Anna Nagar](location)
+    - Nearest branch from [Andheri, Mumbai](location)
+    - Which branch is closest to [Salt Lake, Kolkata](location)?
+
+- intent: goodbye
+  examples: |
+    - Bye
+    - Goodbye
+    - See you later
+    - That's all, thanks
+    - I'm done
+    - Thanks, bye
+    - Have a good day
+    - Cheers
+    - Farewell
+    - Nothing else, bye
+
+- intent: greet
+  examples: |
+    - Hi
+    - Hello
+    - Hey there
+    - Good morning
+    - Good afternoon
+    - Good evening
+    - Hi, I need help
+    - Hello, can you assist me?
+    - Hey, I have a question
+    - Namaste
+    - Howdy
+    - What's up
+
+- intent: inform_account_number
+  examples: |
+    - my account number is [1234567890](account_number)
+    - account number [9876543210](account_number)
+    - [1122334455](account_number) is my account number
+    - it is [4455667788](account_number)
+    - [0011223344](account_number)
+    - [5566778899](account_number)
+    - [6677889900](account_number)
+    - [3344556677](account_number)
+    - [2233445566](account_number)
+    - [8899001122](account_number)
+    - [2345678914](account_number)
+    - [1987654321](account_number)
+    - [3456789012](account_number)
+    - [4567890123](account_number)
+    - [5678901234](account_number)
+    - [6789012345](account_number)
+    - [7890123456](account_number)
+    - [8901234567](account_number)
+    - [9012345678](account_number)
+    - [0123456789](account_number)
+    - number is [1234567890](account_number)
+    - the number is [9876543210](account_number)
+    - my number is [1122334455](account_number)
+    - [4455667788](account_number) please
+    - here is my account number [5566778899](account_number)
+    - acc no [6677889900](account_number)
+    - account no [3344556677](account_number)
+
+- intent: inform_account_type
+  examples: |
+    - [savings](account_type)
+    - [current](account_type)
+    - [savings](account_type) account
+    - [current](account_type) account
+    - my [savings](account_type) account
+    - my [current](account_type) account
+    - use [savings](account_type)
+    - use [current](account_type)
+    - the [savings](account_type) one
+    - the [current](account_type) one
+    - I have a [savings](account_type) account
+    - [saving](account_type) account
+    - [saving](account_type)
+    - [savings](account_type) please
+    - [current](account_type) please
+    - from [savings](account_type)
+    - go with [savings](account_type)
+
+- intent: inform_amount
+  examples: |
+    - [500](amount) rupees
+    - [1000](amount) rupees
+    - [2500](amount) rupees
+    - [5000](amount) rupees
+    - [7500](amount) rupees
+    - [10000](amount) rupees
+    - [15000](amount) rupees
+    - [20000](amount) rupees
+    - [50000](amount) rupees
+    - [100000](amount) rupees
+    - Rs [500](amount)
+    - Rs [5000](amount)
+    - Rs [10000](amount)
+    - Rs [25000](amount)
+    - transfer [500](amount)
+    - transfer [5000](amount)
+    - transfer [10000](amount)
+    - send [500](amount)
+    - send [5000](amount)
+    - send [10000](amount)
+    - about [1000](amount)
+    - just [2000](amount)
+    - [5000](amount) only
+    - [3000](amount) please
+    - [500](amount)
+    - [1000](amount)
+    - [2000](amount)
+    - [3000](amount)
+    - [4000](amount)
+    - [5000](amount)
+    - [7500](amount)
+    - [8000](amount)
+    - [10000](amount)
+    - [12000](amount)
+    - [15000](amount)
+    - [20000](amount)
+    - [25000](amount)
+    - [30000](amount)
+    - [50000](amount)
+    - the amount is [5000](amount)
+    - [5000](amount) is the amount
+    - I want to transfer [500](amount)
+    - [400](amount) rupees please
+    - around [2000](amount)
+    - approximately [5000](amount)
+
+- intent: inform_card_type
+  examples: |
+    - [credit](card_type)
+    - [debit](card_type)
+    - [credit](card_type) card
+    - [debit](card_type) card
+    - it is a [credit](card_type) card
+    - it is a [debit](card_type) card
+    - my [debit](card_type) card
+    - my [credit](card_type) card
+    - the [credit](card_type) one
+    - the [debit](card_type) one
+    - [debit](card_type) please
+    - [credit](card_type) please
+    - use my [debit](card_type)
+    - I use a [debit](card_type)
+    - it is [debit](card_type)
+    - it is [credit](card_type)
+    - visa [debit](card_type)
+
+- intent: inform_date
+  examples: |
+    - [yesterday](date)
+    - [last week](date)
+    - [15th March](date)
+    - [January 2024](date)
+    - [last month](date)
+    - [today](date)
+    - [2024-03-15](date)
+    - [this month](date)
+    - [last 7 days](date)
+    - [March 2024](date)
+    - [last 30 days](date)
+    - [this week](date)
+    - [14th February](date)
+
+- intent: inform_loan_type
+  examples: |
+    - [home](loan_type)
+    - [personal](loan_type)
+    - [car](loan_type)
+    - [education](loan_type)
+    - [business](loan_type)
+    - [home](loan_type) loan
+    - [personal](loan_type) loan
+    - [car](loan_type) loan
+    - [education](loan_type) loan
+    - [business](loan_type) loan
+    - [home](loan_type) loan please
+    - I want a [home](loan_type) loan
+    - I need a [personal](loan_type) loan
+    - [home](loan_type) please
+    - give me [car](loan_type) loan details
+    - [education](loan_type) loan info
+    - [home](loan_type) loan type
+    - [personal](loan_type) loan type
+    - it is a [home](loan_type) loan
+    - it is [personal](loan_type)
+    - [car](loan_type) please
+    - [education](loan_type) please
+    - [business](loan_type) please
+    - for [home](loan_type)
+    - for [personal](loan_type)
+    - for [car](loan_type)
+    - for [education](loan_type)
+    - for [business](loan_type)
+    - the type is [home](loan_type)
+    - [home](loan_type) loan one
+    - [personal](loan_type) one
+    - just [home](loan_type)
+    - just [personal](loan_type)
+    - just [car](loan_type)
+
+- intent: inform_location
+  examples: |
+    - [Chennai](location)
+    - [Mumbai](location)
+    - [Bangalore](location)
+    - [Hyderabad](location)
+    - [Pune](location)
+    - [Delhi](location)
+    - [Kolkata](location)
+    - [Coimbatore](location)
+    - [Madurai](location)
+    - [T Nagar](location)
+    - [Anna Nagar](location)
+    - near [Chennai](location)
+    - in [Mumbai](location)
+    - at [Bangalore](location)
+    - [Chennai](location) please
+    - I am in [Delhi](location)
+    - close to [Hyderabad](location)
+
+- intent: loan_inquiry
+  examples: |
+    - I want to apply for a [home](loan_type) loan
+    - What are the interest rates for [personal](loan_type) loans?
+    - Tell me about [car](loan_type) loan options
+    - How do I apply for a [education](loan_type) loan?
+    - What is the EMI for a [home](loan_type) loan of [500000](amount)?
+    - I need details about [business](loan_type) loans
+    - What documents are required for a [personal](loan_type) loan?
+    - Can I get a [car](loan_type) loan with bad credit?
+    - What is the eligibility for a [home](loan_type) loan?
+    - Apply for [education](loan_type) loan
+    - How long does it take to get a [personal](loan_type) loan approved?
+    - What is the maximum amount for a [business](loan_type) loan?
+    - Show me [home](loan_type) loan interest rates
+
+- intent: mini_statement
+  examples: |
+    - Show me my mini statement
+    - I need a mini statement for my [savings](account_type) account
+    - Get last 10 transactions
+    - Print mini statement
+    - View mini statement for [current](account_type) account
+    - Show recent 5 transactions from [savings](account_type)
+    - Mini statement please
+    - Can I see a short statement of my [current](account_type) account?
+    - Give me a quick account summary
+    - Show my last few transactions
+    - Account mini statement for [savings](account_type)
+    - View 10 transaction history
+    - Get a brief account statement
+
+- intent: open_account
+  examples: |
+    - I want to open a [savings](account_type) account
+    - How do I open a new bank account?
+    - Open a [current](account_type) account for my business
+    - What are the steps to open a [savings](account_type) account?
+    - I'd like to create a new account
+    - Documents needed to open [savings](account_type) account
+    - How long does it take to open an account?
+    - Can I open a [current](account_type) account online?
+    - Minimum balance for [savings](account_type) account
+    - Open a bank account for a student
+    - What is required to open a [savings](account_type) account?
+    - New account opening procedure for [current](account_type) account
+    - Zero balance [savings](account_type) account
+
+- intent: out_of_scope
+  examples: |
+    - What is the weather today?
+    - Tell me a joke
+    - Who is the prime minister?
+    - Order pizza
+    - Book a flight
+    - Play some music
+    - What movies are playing?
+    - Tell me about cricket scores
+    - Help me with my homework
+
+- intent: request_human_agent
+  examples: |
+    - I want to talk to a human
+    - Connect me to an agent
+    - Speak to a real person
+    - Transfer me to customer support
+    - I need human help
+    - Let me talk to someone
+    - I want live support
+    - Talk to an agent please
+    - human please
+    - agent
+    - talk to human
+    - real person please
+    - customer care
+
+- intent: transaction_status
+  examples: |
+    - What is the status of my transaction?
+    - Check my recent transactions
+    - Show transactions from [January 2024](date)
+    - I made a payment on [15th March](date), did it go through?
+    - Was my transaction on [2024-01-10](date) successful?
+    - Track my fund transfer
+    - Show last 5 transactions
+    - Why is my transaction pending?
+    - Transaction history for [last month](date)
+    - Did my payment on [yesterday](date) get processed?
+    - Show me failed transactions
+    - What happened to my transfer on [March 1st](date)?
+    - Check if my payment was debited on [10th January](date)
+    - View transaction details from [last week](date)
+
+- intent: transfer_money
+  examples: |
+    - Transfer [5000](amount) rupees to my friend
+    - Send [10000](amount) to account
+    - I want to transfer [2500](amount) from [savings](account_type) to [current](account_type) account
+    - How do I transfer [50000](amount)?
+    - Move [1000](amount) from [current](account_type) account
+    - Transfer funds between accounts
+    - Send money via NEFT
+    - Do an IMPS transfer of [3000](amount)
+    - I need to send [7500](amount) urgently
+    - Transfer [20000](amount) to my [savings](account_type) account
+    - Wire transfer of [100000](amount)
+    - Send [500](amount) to a UPI number
+    - Transfer [15000](amount) from [current](account_type) account today

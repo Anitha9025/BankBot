@@ -84,3 +84,31 @@ rules:
     steps:
       - intent: nlu_fallback
       - action: action_default_fallback
+
+  # ── SLOT FILLING — DETERMINISTIC RULES ───────────────────────────
+  # These rules fire AFTER the bot has asked a specific question,
+  # ensuring the reply is always handled correctly regardless of NLU.
+
+  - rule: Account number provided after being asked
+    condition:
+      - active_loop: null
+      - slot_was_set:
+          - account_type: savings
+    steps:
+      - intent: inform_account_number
+      - action: action_check_balance
+
+  - rule: Account number provided after being asked (current)
+    condition:
+      - active_loop: null
+      - slot_was_set:
+          - account_type: current
+    steps:
+      - intent: inform_account_number
+      - action: action_check_balance
+
+  - rule: Loan type provided after being asked
+    steps:
+      - action: utter_ask_loan_type
+      - intent: inform_loan_type
+      - action: action_loan_inquiry

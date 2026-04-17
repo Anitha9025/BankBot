@@ -16,6 +16,41 @@ from rasa_sdk.events import (
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+# ── MySQL Logging (Module 4 Integration) ───────────────────────────────────────
+try:
+    import pymysql
+
+    _DB_CONFIG = {
+        "host":        "localhost",
+        "port":        3306,
+        "user":        "root",
+        "password":    "Anitha@2K6",          # ← update to match your .env DB_PASSWORD
+        "database":    "bankbot_admin",
+        "charset":     "utf8mb4",
+        "cursorclass": pymysql.cursors.DictCursor,
+    }
+
+    def log_to_db(message: str, intent: str, confidence: float, response: str):
+        """Insert one row into user_logs. Silent on failure."""
+        try:
+            conn = pymysql.connect(**_DB_CONFIG)
+            with conn.cursor() as cursor:
+                cursor.execute(
+                    "INSERT INTO user_logs (message, intent, confidence, response) VALUES (%s,%s,%s,%s)",
+                    (message, intent, round(confidence, 4) if confidence else None, response[:1000] if response else None)
+                )
+            conn.commit()
+            conn.close()
+        except Exception as db_err:
+            logger.warning(f"[log_to_db] Could not write to MySQL: {db_err}")
+
+    _DB_LOGGING = True
+except ImportError:
+    _DB_LOGGING = False
+    def log_to_db(message, intent, confidence, response):
+        pass  # PyMySQL not installed — logging silently skipped
+
+
 
 # ═══════════════════════════════════════════════════════════════════
 #  DUMMY BANKING API
@@ -162,6 +197,10 @@ class ActionCheckBalance(Action):
 
         logger.info(f"[action_check_balance] account_type={account_type}, account_number={account_number}")
 
+        msg        = tracker.latest_message.get("text", "")
+        intent     = tracker.latest_message.get("intent", {}).get("name", "check_balance")
+        confidence = tracker.latest_message.get("intent", {}).get("confidence", 0.0)
+
         # ── Step 1: Need account type first ─────────────────────────
         if not account_type:
             dispatcher.utter_message(response="utter_ask_account_type")
@@ -174,47 +213,46 @@ class ActionCheckBalance(Action):
 
         # ── Step 3: Validate — must be exactly 10 digits ────────────
         if not DummyBankingAPI.validate_account_number(account_number):
-            dispatcher.utter_message(
-                text=(
-                    f"'{account_number}' is not a valid account number.\n"
-                    "Please enter a valid 10-digit account number.\n"
-                    "Example: 1234567890"
-                )
+            err_text = (
+                f"'{account_number}' is not a valid account number.\n"
+                "Please enter a valid 10-digit account number.\n"
+                "Example: 1234567890"
             )
-            return [SlotSet("account_number", None)]   # clear bad value, ask again
+            dispatcher.utter_message(text=err_text)
+            log_to_db(msg, intent, confidence, err_text)
+            return [SlotSet("account_number", None)]
 
         # ── Step 4: Fetch balance ────────────────────────────────────
+        response_text = ""
         try:
             result = DummyBankingAPI.get_balance(account_type, account_number)
-
-            # Mask account number: show only last 4 digits for security
             masked = "X" * (len(account_number) - 4) + account_number[-4:]
-
-            dispatcher.utter_message(
-                text=(
-                    f"--- {account_type.capitalize()} Account Balance ---\n\n"
-                    f"Account Holder:    {result['account_holder']}\n"
-                    f"Account Number:    {masked}\n"
-                    f"Account Type:      {account_type.capitalize()}\n\n"
-                    f"Total Balance:     Rs.{result['balance']:,.2f}\n"
-                    f"Available Balance: Rs.{result['available']:,.2f}\n\n"
-                    f"As of: {datetime.now().strftime('%d %b %Y, %I:%M %p')}\n\n"
-                    f"Need a detailed statement or want to transfer funds?"
-                )
+            response_text = (
+                f"--- {account_type.capitalize()} Account Balance ---\n\n"
+                f"Account Holder:    {result['account_holder']}\n"
+                f"Account Number:    {masked}\n"
+                f"Account Type:      {account_type.capitalize()}\n\n"
+                f"Total Balance:     Rs.{result['balance']:,.2f}\n"
+                f"Available Balance: Rs.{result['available']:,.2f}\n\n"
+                f"As of: {datetime.now().strftime('%d %b %Y, %I:%M %p')}\n\n"
+                f"Need a detailed statement or want to transfer funds?"
             )
+            dispatcher.utter_message(text=response_text)
 
         except Exception as e:
             logger.error(f"[action_check_balance] API error: {e}")
-            dispatcher.utter_message(
-                text="I am having trouble fetching your balance right now. "
-                     "Please try again or call 1800-XXX-XXXX."
-            )
+            response_text = "I am having trouble fetching your balance right now. Please try again or call 1800-XXX-XXXX."
+            dispatcher.utter_message(text=response_text)
 
-        # ── Step 5: Reset both slots ─────────────────────────────────
+        # ── Step 5: Log to MySQL ─────────────────────────────────────
+        log_to_db(msg, intent, confidence, response_text)
+
+        # ── Step 6: Reset both slots ─────────────────────────────────
         return [
             SlotSet("account_type", None),
             SlotSet("account_number", None),
         ]
+
 
 
 # ═══════════════════════════════════════════════════════════════════
@@ -238,11 +276,18 @@ class ActionTransferMoney(Action):
 
         logger.info(f"[action_transfer_money] amount={amount}, account_type={account_type}")
 
+        msg        = tracker.latest_message.get("text", "")
+        intent     = tracker.latest_message.get("intent", {}).get("name", "transfer_money")
+        confidence = tracker.latest_message.get("intent", {}).get("confidence", 0.0)
+
+        # Log this user message immediately (captures early-return paths too)
+        log_to_db(msg, intent, confidence, "")
+
         if not amount:
             dispatcher.utter_message(response="utter_ask_amount")
             return []
 
-        # Safe conversion — amount slot is float type so this is fine here
+
         try:
             amount_val = float(amount)
         except (ValueError, TypeError):
@@ -250,9 +295,7 @@ class ActionTransferMoney(Action):
             return [SlotSet("amount", None)]
 
         if amount_val <= 0:
-            dispatcher.utter_message(
-                text="The transfer amount must be greater than Rs.0. Please provide a valid amount."
-            )
+            dispatcher.utter_message(text="The transfer amount must be greater than Rs.0. Please provide a valid amount.")
             return []
 
         if amount_val > 500000:
@@ -264,27 +307,30 @@ class ActionTransferMoney(Action):
             )
             return []
 
+        response_text = ""
         try:
             result = DummyBankingAPI.transfer_funds(amount_val, account_type or "savings")
-            dispatcher.utter_message(
-                text=(
-                    f"--- Transfer Successful ---\n\n"
-                    f"Amount Transferred: Rs.{amount_val:,.2f}\n"
-                    f"From Account:       {(account_type or 'Savings').capitalize()}\n"
-                    f"Transaction ID:     {result['transaction_id']}\n"
-                    f"Status:             {result['status']}\n"
-                    f"Time:               {result['timestamp']}\n\n"
-                    f"Please save your Transaction ID for future reference. "
-                    f"Is there anything else I can help you with?"
-                )
+            response_text = (
+                f"--- Transfer Successful ---\n\n"
+                f"Amount Transferred: Rs.{amount_val:,.2f}\n"
+                f"From Account:       {(account_type or 'Savings').capitalize()}\n"
+                f"Transaction ID:     {result['transaction_id']}\n"
+                f"Status:             {result['status']}\n"
+                f"Time:               {result['timestamp']}\n\n"
+                f"Please save your Transaction ID for future reference. "
+                f"Is there anything else I can help you with?"
             )
+            dispatcher.utter_message(text=response_text)
         except Exception as e:
             logger.error(f"[action_transfer_money] Error: {e}")
-            dispatcher.utter_message(
-                text="Transfer could not be processed. Please try again or contact support at 1800-XXX-XXXX."
-            )
+            response_text = "Transfer could not be processed. Please try again or contact support at 1800-XXX-XXXX."
+            dispatcher.utter_message(text=response_text)
+
+        # ── Log to MySQL ─────────────────────────────────────────────
+        log_to_db(msg, intent, confidence, response_text)
 
         return [SlotSet("amount", None), SlotSet("account_type", None)]
+
 
 
 # ═══════════════════════════════════════════════════════════════════
@@ -580,7 +626,7 @@ class ActionEscalateToHuman(Action):
 
 
 # ═══════════════════════════════════════════════════════════════════
-#  ACTION 10: DEFAULT FALLBACK
+#  ACTION 10: DEFAULT FALLBACK  (Context-Aware Recovery)
 # ═══════════════════════════════════════════════════════════════════
 
 class ActionDefaultFallback(Action):
@@ -595,9 +641,116 @@ class ActionDefaultFallback(Action):
         domain: Dict[Text, Any]
     ) -> List[Dict[Text, Any]]:
 
+        last_text   = (tracker.latest_message.get("text") or "").strip()
+        intent_name = tracker.latest_message.get("intent", {}).get("name", "")
+        confidence  = tracker.latest_message.get("intent", {}).get("confidence", 0.0)
+
+        account_type   = tracker.get_slot("account_type")
+        account_number = get_account_number_from_tracker(tracker)
+        amount_slot    = tracker.get_slot("amount")
+
+        logger.warning(f"[action_default_fallback] text='{last_text}' intent={intent_name}({confidence:.2f}) "
+                       f"account_type={account_type} account_number={account_number}")
+
+        # ── RECOVERY 1: Waiting for account number ──────────────────
+        # If account_type is set but account_number is not yet filled,
+        # and the user typed a 10-digit number → treat it as account number.
+        if account_type and not account_number:
+            digits = re.sub(r"\s", "", last_text)          # strip spaces
+            match  = re.fullmatch(r"\d{10}", digits)
+            if match:
+                acct_num = match.group()
+                logger.info(f"[action_default_fallback] RECOVERY: extracted account_number={acct_num}")
+
+                if not DummyBankingAPI.validate_account_number(acct_num):
+                    dispatcher.utter_message(
+                        text="That doesn't look like a valid 10-digit account number.\n"
+                             "Please enter your 10-digit account number. Example: 1234567890"
+                    )
+                    return []
+
+                try:
+                    result   = DummyBankingAPI.get_balance(account_type, acct_num)
+                    masked   = "X" * 6 + acct_num[-4:]
+                    resp_txt = (
+                        f"--- {account_type.capitalize()} Account Balance ---\n\n"
+                        f"Account Holder:    {result['account_holder']}\n"
+                        f"Account Number:    {masked}\n"
+                        f"Account Type:      {account_type.capitalize()}\n\n"
+                        f"Total Balance:     Rs.{result['balance']:,.2f}\n"
+                        f"Available Balance: Rs.{result['available']:,.2f}\n\n"
+                        f"As of: {datetime.now().strftime('%d %b %Y, %I:%M %p')}\n\n"
+                        f"Need a detailed statement or want to transfer funds?"
+                    )
+                    dispatcher.utter_message(text=resp_txt)
+                    log_to_db(last_text, "inform_account_number_recovered", confidence, resp_txt)
+                except Exception as e:
+                    logger.error(f"[action_default_fallback] Balance error: {e}")
+                    dispatcher.utter_message(text="I am having trouble fetching your balance. Please try again.")
+
+                return [
+                    SlotSet("account_type",   None),
+                    SlotSet("account_number", None),
+                    SlotSet("consecutive_fallback_count", 0),
+                ]
+
+        # ── RECOVERY 2: Waiting for loan type ───────────────────────
+        loan_keywords = {"home", "personal", "car", "education", "business"}
+        if not account_type and not amount_slot:
+            words = set(last_text.lower().split())
+            found_loan = words & loan_keywords
+            if found_loan:
+                loan_type = found_loan.pop()
+                logger.info(f"[action_default_fallback] RECOVERY: extracted loan_type={loan_type}")
+                try:
+                    info     = DummyBankingAPI.get_loan_info(loan_type)
+                    resp_txt = (
+                        f"--- {loan_type.capitalize()} Loan Details ---\n\n"
+                        f"Interest Rate:   {info['rate']} per annum\n"
+                        f"Maximum Amount:  {info['max_amount']}\n"
+                        f"Maximum Tenure:  {info['tenure']}\n"
+                        f"Processing Fee:  {info['fee']}\n\n"
+                        f"Would you like to apply for a {loan_type} loan?"
+                    )
+                    dispatcher.utter_message(text=resp_txt)
+                    log_to_db(last_text, "inform_loan_type_recovered", confidence, resp_txt)
+                except Exception as e:
+                    logger.error(f"[action_default_fallback] Loan error: {e}")
+                    dispatcher.utter_message(text="I could not fetch loan details. Please call 1800-XXX-XXXX.")
+                return [SlotSet("consecutive_fallback_count", 0)]
+
+        # ── RECOVERY 3: Waiting for transfer amount ──────────────────
+        if account_type and not amount_slot:
+            amount_match = re.search(r"\d+(?:\.\d+)?", last_text)
+            if amount_match:
+                amount_val = float(amount_match.group())
+                logger.info(f"[action_default_fallback] RECOVERY: extracted amount={amount_val}")
+                if 0 < amount_val <= 500000:
+                    try:
+                        result   = DummyBankingAPI.transfer_funds(amount_val, account_type)
+                        resp_txt = (
+                            f"--- Transfer Successful ---\n\n"
+                            f"Amount Transferred: Rs.{amount_val:,.2f}\n"
+                            f"From Account:       {account_type.capitalize()}\n"
+                            f"Transaction ID:     {result['transaction_id']}\n"
+                            f"Status:             {result['status']}\n"
+                            f"Time:               {result['timestamp']}\n\n"
+                            f"Please save your Transaction ID for future reference."
+                        )
+                        dispatcher.utter_message(text=resp_txt)
+                        log_to_db(last_text, "inform_amount_recovered", confidence, resp_txt)
+                    except Exception as e:
+                        logger.error(f"[action_default_fallback] Transfer error: {e}")
+                        dispatcher.utter_message(text="Transfer could not be processed. Please try again.")
+                    return [
+                        SlotSet("amount",      None),
+                        SlotSet("account_type", None),
+                        SlotSet("consecutive_fallback_count", 0),
+                    ]
+
+        # ── DEFAULT: Send standard fallback message ──────────────────
         fallback_count  = tracker.get_slot("consecutive_fallback_count") or 0
         fallback_count += 1
-        logger.warning(f"[action_default_fallback] Fallback count: {fallback_count}")
 
         if fallback_count >= 2:
             dispatcher.utter_message(
@@ -608,21 +761,21 @@ class ActionDefaultFallback(Action):
                 SlotSet("consecutive_fallback_count", 0),
                 ActionExecuted("action_escalate_to_human"),
             ]
-        else:
-            dispatcher.utter_message(
-                text=(
-                    "I am sorry, I did not quite understand that.\n\n"
-                    "I can help you with:\n"
-                    "  - Account balance and statements\n"
-                    "  - Fund transfers\n"
-                    "  - Loan inquiries\n"
-                    "  - Card blocking\n"
-                    "  - ATM and Branch locator\n"
-                    "  - Banking FAQs\n\n"
-                    "Please try rephrasing, or type 'agent' to speak with a human."
-                )
+
+        dispatcher.utter_message(
+            text=(
+                "I am sorry, I did not quite understand that.\n\n"
+                "I can help you with:\n"
+                "  - Account balance and statements\n"
+                "  - Fund transfers\n"
+                "  - Loan inquiries\n"
+                "  - Card blocking\n"
+                "  - ATM and Branch locator\n"
+                "  - Banking FAQs\n\n"
+                "Please try rephrasing, or type 'agent' to speak with a human."
             )
-            return [
-                SlotSet("consecutive_fallback_count", fallback_count),
-                UserUtteranceReverted(),
-            ]
+        )
+        return [
+            SlotSet("consecutive_fallback_count", fallback_count),
+            UserUtteranceReverted(),
+        ]

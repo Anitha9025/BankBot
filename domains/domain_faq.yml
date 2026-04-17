@@ -1,0 +1,42 @@
+version: "3.1"
+
+intents:
+
+  - faq_admin_8
+  - faq_admin_9
+  - faq_admin_10
+  - faq_admin_11
+  - faq_admin_12
+  - faq_admin_13
+  - faq_admin_14
+  - faq_admin_15
+  - faq_admin_16
+
+responses:
+
+  utter_faq_admin_8:
+  - text: "Branch Hours: Monday-Friday 9:30 AM to 4:30 PM, Saturday 9:30 AM to 1:30 PM. Call Centre: 24/7 at 1800-XXX-XXXX. Online Banking and this chatbot: always available."
+
+  utter_faq_admin_9:
+  - text: "Minimum Balance: Savings Metro Rs.10,000, Semi-urban Rs.5,000, Rural Rs.2,500. Current Account Rs.25,000. Non-maintenance charges apply if you go below the limit."
+
+  utter_faq_admin_10:
+  - text: "Interest Rates: Savings Account 3.5% per annum. Fixed Deposit 1 year 7.1% per annum. Home Loan from 8.5% per annum. Personal Loan from 10.5% per annum. Car Loan from 9.0% per annum."
+
+  utter_faq_admin_11:
+  - text: "KYC Documents: Identity Proof — Aadhaar, PAN, Passport, or Voter ID. Address Proof — Aadhaar, Utility Bill last 3 months, or Bank Statement."
+
+  utter_faq_admin_12:
+  - text: "Find your IFSC code on your cheque book front page, on your passbook, or at www.bankname.com/ifsc."
+
+  utter_faq_admin_13:
+  - text: "Daily Limits: NEFT no limit, RTGS minimum Rs.2 lakhs, IMPS up to Rs.5 lakhs, UPI up to Rs.1 lakh, ATM withdrawal Rs.25,000 to Rs.1 lakh based on card type."
+
+  utter_faq_admin_14:
+  - text: "Check cheque status via Net Banking under Accounts, or call 1800-XXX-XXXX with your cheque number. Cheques clear in 2 to 3 working days."
+
+  utter_faq_admin_15:
+  - text: "Fixed Deposits: Minimum Rs.10,000, tenure 7 days to 10 years, interest 5.5% to 7.1% per annum. Senior citizen bonus 0.5% extra. Premature withdrawal allowed with penalty."
+
+  utter_faq_admin_16:
+  - text: "Anitha is the developer of BankBot!"

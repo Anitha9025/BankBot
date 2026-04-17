@@ -1,0 +1,43 @@
+version: "3.1"
+
+rules:
+
+  - rule: Admin FAQ 8 - What time does the bank close?
+    steps:
+      - intent: faq_admin_8
+      - action: utter_faq_admin_8
+
+  - rule: Admin FAQ 9 - What is the minimum balance re
+    steps:
+      - intent: faq_admin_9
+      - action: utter_faq_admin_9
+
+  - rule: Admin FAQ 10 - Current savings interest rate
+    steps:
+      - intent: faq_admin_10
+      - action: utter_faq_admin_10
+
+  - rule: Admin FAQ 11 - What ID proof is accepted?
+    steps:
+      - intent: faq_admin_11
+      - action: utter_faq_admin_11
+
+  - rule: Admin FAQ 12 - Bank code for NEFT
+    steps:
+      - intent: faq_admin_12
+      - action: utter_faq_admin_12
+
+  - rule: Admin FAQ 13 - What is the daily transaction 
+    steps:
+      - intent: faq_admin_13
+      - action: utter_faq_admin_13
+
+  - rule: Admin FAQ 14 - How long does a cheque take to
+    steps:
+      - intent: faq_admin_14
+      - action: utter_faq_admin_14
+
+  - rule: Admin FAQ 15 - How do I open an FD?
+    steps:
+      - intent: faq_admin_15
+      - action: utter_faq_admin_15

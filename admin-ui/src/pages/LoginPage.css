@@ -1,0 +1,78 @@
+/* Login Page */
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  background-image:
+    linear-gradient(rgba(99,102,241,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99,102,241,0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.login-card {
+  background: var(--surface);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  padding: 40px 36px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+  animation: fadeSlideIn 0.3s ease-out;
+}
+
+.login-logo { font-size: 3rem; margin-bottom: 12px; }
+.login-title { font-size: 1.6rem; font-weight: 700; color: var(--text); margin: 0 0 6px; }
+.login-subtitle { color: var(--text-muted); font-size: 0.9rem; margin: 0 0 24px; }
+
+.login-error {
+  background: rgba(239,68,68,0.12);
+  border: 1px solid rgba(239,68,68,0.3);
+  color: #fca5a5;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.login-form { display: flex; flex-direction: column; gap: 16px; text-align: left; }
+
+.field-group label { display: block; font-size: 0.82rem; color: var(--text-muted); margin-bottom: 6px; }
+
+.field-group input {
+  width: 100%;
+  padding: 11px 14px;
+  background: var(--surface-input);
+  border: 1.5px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 0.95rem;
+  font-family: inherit;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+.field-group input:focus { border-color: var(--primary-light); }
+
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  margin-top: 4px;
+  transition: opacity 0.2s, transform 0.15s;
+}
+.login-btn:hover:not(:disabled) { opacity: 0.9; transform: translateY(-1px); }
+.login-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.login-hint { margin: 18px 0 0; font-size: 0.78rem; color: var(--text-muted); }
+.login-hint code { background: rgba(255,255,255,0.08); padding: 2px 6px; border-radius: 4px; color: var(--primary-light); }
